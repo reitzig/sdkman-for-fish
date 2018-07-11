@@ -1,6 +1,22 @@
 # sdkman autocompletion
 
+# # # # # #
+# Completion trigger predicates
+# # # # # #
+
+function __fish_sdkman_sdk_is_missing
+  if test -f "$HOME/.sdkman/bin/sdkman-init.sh"
+    return 1
+  else
+    return 0
+  end
+end
+
 function __fish_sdkman_no_command --description 'Test if there is no command'
+  if __fish_sdkman_sdk_is_missing
+    return 1 # Suppress completion
+  end
+
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 1 ]
@@ -10,6 +26,10 @@ function __fish_sdkman_no_command --description 'Test if there is no command'
 end
 
 function __fish_sdkman_using_command --description 'Test if the main command matches one of the parameters'
+  if __fish_sdkman_sdk_is_missing
+    return 1 # Suppress completion
+  end
+
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 2 ]
@@ -21,6 +41,10 @@ function __fish_sdkman_using_command --description 'Test if the main command mat
 end
 
 function __fish_sdkman_specifying_candidate
+  if __fish_sdkman_sdk_is_missing
+    return 1 # Suppress completion
+  end
+
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 3 ] # currently, sdk does not support multiple versions
@@ -40,6 +64,10 @@ function __fish_sdkman_command_has_enough_parameters
   return 1
 end
 
+# # # # # #
+# Data collectors
+# # # # # #
+
 function __fish_sdkman_candidates
   cat ~/.sdkman/var/candidates | tr ',' '\n'
 end
@@ -48,6 +76,13 @@ function __fish_sdkman_installed_versions
   set cmd (commandline -opc)
   ls -v1 ~/.sdkman/candidates/$cmd[3] | grep -v current
 end
+
+# # # # # #
+# Completion specification
+# # # # # #
+
+# Suppress any default completion if sdkman is not installed
+complete -c sdk -f -n '__fish_sdkman_sdk_is_missing'
 
 # install
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'i install' -d 'Install new version'
