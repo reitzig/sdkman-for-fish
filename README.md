@@ -2,6 +2,8 @@
 
 Provides auto-completion for [SDKMAN!] and adds installed binaries to the PATH.
 
+Tested with fish 2.7.1 and SDKMAN! 5.6.5.
+
 ## Install
 
 With [fisherman] (install separately):
