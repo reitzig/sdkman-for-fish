@@ -1,4 +1,8 @@
-# sdkman autocompletion
+# Defines autocompletion for SDKMAN!
+
+# Copyright (c) 2018 Raphael Reitzig
+# MIT License (MIT)
+# https://github.com/reitzig/sdkman-for-fish
 
 # # # # # #
 # Completion trigger predicates

@@ -1,5 +1,12 @@
 #!/usr/bin/fish
 
+# Makes command and binaries from SDKMAN! available in fish.
+# Delegates to bash for the `sdk` command.
+
+# Copyright (c) 2018 Raphael Reitzig
+# MIT License (MIT)
+# https://github.com/reitzig/sdkman-for-fish
+
 set sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
 
 if test -f "$sdkman_init"

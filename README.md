@@ -1,6 +1,7 @@
 # SDKMAN! for fish
 
-Provides auto-completion for [SDKMAN!] and adds installed binaries to the PATH.
+Makes command `sdk` from [SDKMAN!] available in fish.
+Also provides auto-completion and adds binaries from installed SDKs to the PATH.
 
 Tested with fish 2.7.1 and SDKMAN! 5.6.5.
 
@@ -21,7 +22,7 @@ with `sdk` as you would expect.
 
  * Completion originally by [Ted Wise](https://github.com/ctwise); see his 
      [blog post from 2016](http://tedwise.com/2016/02/26/using-sdkman-with-the-fish-shell).
- * Binary loading by [Koala Yeung](https://github.com/yookoala);
+ * Binary loading originally by [Koala Yeung](https://github.com/yookoala);
      see [his comment on sdkman/sdkman-cli#294](https://github.com/sdkman/sdkman-cli/issues/294#issuecomment-318252058).
 
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
