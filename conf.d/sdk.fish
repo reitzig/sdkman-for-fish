@@ -22,6 +22,15 @@ if test -f "$sdkman_init"
 
     # Declare the sdk command for fish
     function sdk
-        bash -c "source $sdkman_init && sdk $argv"
+        set bashEcho (bash -c "source $sdkman_init && sdk $argv && echo \"\$PATH\"")
+
+        # If SDKMAN! succeeded, copy PATH here (might have changed)
+        if [ $status = 0 ]
+            set newPath (string split : "$bashEcho[-1]")
+            set -gx PATH $newPath
+        end
+
+        # Print output of SDKMAN!
+        string join \n $bashEcho[0..-2]
     end
 end
