@@ -30,4 +30,4 @@ with `sdk` as you would expect.
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
 [fisherman]: https://github.com/fisherman/fisherman
 [travis-link]: https://travis-ci.org/reitzig/sdkman-for-fish
-[travis-badge]: https://img.shields.io/travis/reitzig/sdkman-for-fish.svg
+[travis-badge]: https://travis-ci.org/reitzig/sdkman-for-fish.svg?branch=master
