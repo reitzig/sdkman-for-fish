@@ -17,8 +17,8 @@ if test -f "$sdkman_init"
         # This is a subshell, SDKMAN! binaries already in path.
     case '*'
         # No SDKMAN! in PATH yet, so add candidate binaries
-        for ITEM in $HOME/.sdkman/candidates/* ;
-            set -gx PATH $PATH $ITEM/current/bin
+        for ITEM in $HOME/.sdkman/candidates/*/current ;
+            set -gx PATH $PATH $ITEM/bin
         end
     end
 
