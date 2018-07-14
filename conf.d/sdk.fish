@@ -9,7 +9,9 @@
 
 set sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
 
+# Don't do anything if SDKMAN! isn't installed, because that would be silly
 if test -f "$sdkman_init"
+    # Add binaries from installed SDKs to PATH, if necessary
     switch "$PATH"
     case "*$HOME/.sdkman/candidates/*"
         # This is a subshell, SDKMAN! binaries already in path.
@@ -22,15 +24,23 @@ if test -f "$sdkman_init"
 
     # Declare the sdk command for fish
     function sdk
-        set bashEcho (bash -c "source $sdkman_init && sdk $argv && echo \"\$PATH\"")
+        # We need to leave stdin and stdout of sdk free for user interaction.
+        # So, pipe PATH (which might have changed) through a file.
+        # Now, getting the exit code of sdk itself is a hassle so pipe it as well.
+        # TODO: Can somebody get this to work without the overhead of a file?
+        set pipe (mktemp)
+        bash -c "source $sdkman_init && sdk $argv; echo -e \"\$PATH\n\$?\" > $pipe"
+        set bashDump (cat $pipe; rm $pipe)
+
+        set bashPath $bashDump[1]
+        set sdkStatus $bashDump[2]
 
         # If SDKMAN! succeeded, copy PATH here (might have changed)
-        if [ $status = 0 ]
-            set newPath (string split : "$bashEcho[-1]")
+        if [ $sdkStatus = 0 ]
+            set newPath (string split : "$bashPath")
             set -gx PATH $newPath
         end
 
-        # Print output of SDKMAN!
-        string join \n $bashEcho[0..-2]
+        return $sdkStatus
     end
 end
