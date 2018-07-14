@@ -1,0 +1,21 @@
+sudo: required
+before_install:
+    - sudo add-apt-repository -y ppa:fish-shell/release-2
+    - sudo apt-get update
+    - sudo apt-get -y install fish
+    - curl -s "https://get.sdkman.io" | bash
+    - source "${HOME}"/.sdkman/bin/sdkman-init.sh
+    - sdk install ant 1.9.9
+    - echo "y" | sdk install ant 1.10.1
+    - sdk default ant 1.10.1
+
+install:
+    - mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
+    - cp completions/* "${HOME}"/.config/fish/completions/
+    - cp conf.d/* "${HOME}"/.config/fish/conf.d/
+    #- cp functions/* "${HOME}"/.config/fish/functions/
+
+jobs:
+  include:
+    - stage: Test Wrapper
+      script: fish test/wrapper.fish
