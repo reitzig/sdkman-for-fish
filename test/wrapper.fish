@@ -1,3 +1,7 @@
+# Test that a couple of commands have the same effect when run through
+# the fish wrapper and directly.
+# Verifies equality of (standard) output, exit code, and PATH.
+
 set test_commands \
     "sdk" \
     "sdk version" \
