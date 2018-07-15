@@ -40,7 +40,7 @@ test_cases = {
     "install 1." => [],
 
     "uninstall " => ["ant"],
-    "uninstall an" => ["ant"],
+    "uninstall a" => ["ant"],
     "uninstall j" => [],
     "uninstall 1." => [],
 
@@ -87,19 +87,19 @@ test_cases = {
     "update a" => [],
 
     "flush " => ["broadcast", "archives", "temp"],
-    "flush a" => [],
+    "flush x" => [],
 
     # Third parameters complete correctly
     #"install ant 1.10." => ["1.10.0", "1.10.1"], # TODO: issue #4
     "uninstall ant 1.10." => ["1.10.1"],
-    "list " => [],
+    "list ant " => [],
     "use ant " => ["1.9.9", "1.10.1"],
     "default ant " => ["1.9.9", "1.10.1"],
-    "current " => [],
-    "upgrade " => [],
-    "offline " => [],
-    "selfupdate " => [],
-    "flush " => [],
+    "current ant " => [],
+    "upgrade ant " => [],
+    "offline ant " => [],
+    "selfupdate ant " => [],
+    "flush ant " => [],
 
     # Fourth parameters complete correctly
     "install ant 1.10.2 " => [],

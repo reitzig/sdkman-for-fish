@@ -76,6 +76,12 @@ function __fish_sdkman_candidates
   cat ~/.sdkman/var/candidates | tr ',' '\n'
 end
 
+function __fish_sdkman_candidates_with_versions
+  find ~/.sdkman/candidates/ -name '*current*' -printf "%h\n" \
+  | cut -d '/' -f 6 \
+  | sort -u
+end
+
 function __fish_sdkman_installed_versions
   set cmd (commandline -opc)
   if [ -d ~/.sdkman/candidates/$cmd[3]/current ]
@@ -98,7 +104,7 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 i install' 
 
 # uninstall
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'rm uninstall' -d 'Uninstall version'
-complete -c sdk -f -n '__fish_sdkman_using_command rm uninstall' -a "(__fish_sdkman_candidates)"  
+complete -c sdk -f -n '__fish_sdkman_using_command rm uninstall' -a "(__fish_sdkman_candidates_with_versions)"  
 complete -c sdk -f -n '__fish_sdkman_specifying_candidate rm uninstall' -a "(__fish_sdkman_installed_versions)" 
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 rm uninstall' # block
 
@@ -109,13 +115,13 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 ls list' # 
 
 # use
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'u use' -d 'Use specific version'
-complete -c sdk -f -n '__fish_sdkman_using_command u use' -a "(__fish_sdkman_candidates)"  
+complete -c sdk -f -n '__fish_sdkman_using_command u use' -a "(__fish_sdkman_candidates_with_versions)"  
 complete -c sdk -f -n '__fish_sdkman_specifying_candidate u use' -a "(__fish_sdkman_installed_versions)" 
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 u use' # block
 
 # default
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'd default' -d 'Set default version'
-complete -c sdk -f -n '__fish_sdkman_using_command d default' -a "(__fish_sdkman_candidates)"  
+complete -c sdk -f -n '__fish_sdkman_using_command d default' -a "(__fish_sdkman_candidates_with_versions)"  
 complete -c sdk -f -n '__fish_sdkman_specifying_candidate d default' -a "(__fish_sdkman_installed_versions)" 
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 d default' # block
 
@@ -126,7 +132,7 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 c current' 
 
 # upgrade
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'ug upgrade' -d 'Display what is outdated'
-complete -c sdk -f -n '__fish_sdkman_using_command ug upgrade' -a "(__fish_sdkman_candidates)" 
+complete -c sdk -f -n '__fish_sdkman_using_command ug upgrade' -a "(__fish_sdkman_candidates_with_versions)" 
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 ug upgrade' # block
 
 # version
