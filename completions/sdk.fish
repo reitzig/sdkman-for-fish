@@ -73,19 +73,21 @@ end
 # # # # # #
 
 function __fish_sdkman_candidates
-  cat ~/.sdkman/var/candidates | tr ',' '\n'
+  cat "$HOME"/.sdkman/var/candidates | tr ',' '\n'
 end
 
 function __fish_sdkman_candidates_with_versions
-  find ~/.sdkman/candidates/ -name '*current*' -printf "%h\n" \
-  | cut -d '/' -f 6 \
+  set regexpHome (string replace -a '/' '\\/' "$HOME/")
+  find "$HOME"/.sdkman/candidates/ -name '*current*' -printf "%h\n" \
+  | sed -e "s/$regexpHome//" \
+  | cut -d '/' -f 3 \
   | sort -u
 end
 
 function __fish_sdkman_installed_versions
   set cmd (commandline -opc)
-  if [ -d ~/.sdkman/candidates/$cmd[3]/current ]
-    ls -v1 ~/.sdkman/candidates/$cmd[3] | grep -v current
+  if [ -d "$HOME"/.sdkman/candidates/$cmd[3]/current ]
+    ls -v1 "$HOME"/.sdkman/candidates/$cmd[3] | grep -v current
   end
 end
 
