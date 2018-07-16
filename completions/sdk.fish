@@ -101,6 +101,7 @@ complete -c sdk -f -n '__fish_sdkman_sdk_is_missing'
 # install
 complete -c sdk -f -n '__fish_sdkman_no_command' -a 'i install' -d 'Install new version'
 complete -c sdk -f -n '__fish_sdkman_using_command i install' -a "(__fish_sdkman_candidates)"  
+complete -c sdk -f -n '__fish_sdkman_specifying_candidate i install' -a "a.b.c x.y.z" -d "version list unavailable" 
 # TODO complete available versions --> #4
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 i install' # block
 

@@ -60,7 +60,6 @@ test_cases = {
 
     "current an" => ["ant"],
     "current xyz" => [],
-    # "default j" => [], # TODO: should uninstalled candidates complete here?
     "current 1." => [],
 
     "upgrade " => ["ant"],
