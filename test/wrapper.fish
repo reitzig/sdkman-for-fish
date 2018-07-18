@@ -26,8 +26,9 @@ for sdk_cmd in $test_commands
     bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash; echo \"\$?\" > status_bash; echo "\$PATH" > path_bash"
     fish -c "$sdk_cmd > sout_fish; echo \"\$status\" > status_fish; echo "\$PATH" > path_fish"
 
-    # Adjust for different path syntax: replace spaces with colons
-    string join : (string split " " (cat path_fish)) > path_fish
+    # For nicer diffs: one entry per line, sorted
+    string split ":" (cat path_bash) | sort > path_bash
+    string split " " (cat path_fish) | sort > path_fish
 
     for out in sout status path
         if [ (checksum "$out"_bash) != (checksum "$out"_fish) ]

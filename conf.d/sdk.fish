@@ -7,11 +7,19 @@
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
-set sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
+set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
+set __fish_sdkman_noexport_init "$HOME/.config/fisherman/sdkman-for-fish/sdkman-noexport-init.sh"
 
 # Guard: SDKMAN! needs to be installed
-if not test -f "$sdkman_init"
+if not test -f "$__fish_sdkman_init"
     exit 0
+end
+
+# Hack for issue #19: Create version of sdkman-init that doesn't export
+# any environment variables.
+if not test -f "$__fish_sdkman_noexport_init"
+    sed -e 's/^\(\s*\).*\(export\|to_path\).*$/\1:/g' "$__fish_sdkman_init" \
+        > $__fish_sdkman_noexport_init
 end
 
 # Runs the given command in bash, capturing some side effects
@@ -64,6 +72,6 @@ end
 # If this is a subshell of a(n initialized) fish, no initialization
 # necessary. Otherwise:
 if not set -q SDKMAN_DIR
-    __fish_sdkman_run_in_bash "source $sdkman_init"
+    __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
