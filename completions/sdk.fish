@@ -4,23 +4,17 @@
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
+# Guard: SDKMAN! needs to be installed
+if not test -f "$HOME/.sdkman/bin/sdkman-init.sh"
+  exit 0
+end
+
 # # # # # #
 # Completion trigger predicates
 # # # # # #
 
-function __fish_sdkman_sdk_is_missing
-  if test -f "$HOME/.sdkman/bin/sdkman-init.sh"
-    return 1
-  else
-    return 0
-  end
-end
-
-function __fish_sdkman_no_command --description 'Test if there is no command'
-  if __fish_sdkman_sdk_is_missing
-    return 1 # Suppress completion
-  end
-
+# Test if there is no command
+function __fish_sdkman_no_command 
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 1 ]
@@ -29,11 +23,8 @@ function __fish_sdkman_no_command --description 'Test if there is no command'
   return 1
 end
 
-function __fish_sdkman_using_command --description 'Test if the main command matches one of the parameters'
-  if __fish_sdkman_sdk_is_missing
-    return 1 # Suppress completion
-  end
-
+# Test if the main command matches one of the parameters
+function __fish_sdkman_using_command
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 2 ]
@@ -45,10 +36,6 @@ function __fish_sdkman_using_command --description 'Test if the main command mat
 end
 
 function __fish_sdkman_specifying_candidate
-  if __fish_sdkman_sdk_is_missing
-    return 1 # Suppress completion
-  end
-
   set cmd (commandline -opc)
 
   if [ (count $cmd) -eq 3 ] # currently, sdk does not support multiple versions
@@ -94,9 +81,6 @@ end
 # # # # # #
 # Completion specification
 # # # # # #
-
-# Suppress any default completion if sdkman is not installed
-complete -c sdk -f -n '__fish_sdkman_sdk_is_missing'
 
 # install
 complete -c sdk -f -n '__fish_sdkman_no_command' \
