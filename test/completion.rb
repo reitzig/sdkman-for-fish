@@ -101,10 +101,13 @@ test_cases = {
     "flush ant " => [],
 
     # Fourth parameters complete correctly
-    "install ant 1.10.2 " => [],
+    "install ant 1.10.2-mine /tm" => ["/tmp/"],
     "uninstall ant 1.10.1 " => [],
     "use ant 1.10.1 " => [],
     "default ant 1.10.1 " => [],
+
+    # Fifth parameters complete correctly
+    "install ant 1.10.2-mine /tmp " => [],
 
     # Lists of all candidates work
     "install gr" => ["gradle", "grails", "groovy", "groovyserv"],
