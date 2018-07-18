@@ -7,7 +7,8 @@ set test_commands \
     "sdk version" \
     "sdk list java" \
     "sdk update" \
-    "sdk use ant 1.9.9"
+    "sdk use ant 1.9.9" \
+    "sdk offline enable > /dev/null; sdk install ant foo"
 set test_count (count $test_commands)
 set check_count (math "3 * $test_count")
 
@@ -39,7 +40,7 @@ for sdk_cmd in $test_commands
     echo ""
 end
 
-rm {sout, status, path}_{bash, fish}
+rm {sout,status,path}_{bash,fish}
 
 echo "Ran $test_count commands with 3 checks each."
 echo "$failures/$check_count checks failed."
