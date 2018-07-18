@@ -7,10 +7,10 @@
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
-set sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
+set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Guard: SDKMAN! needs to be installed
-if not test -f "$sdkman_init"
+if not test -f "$__fish_sdkman_init"
     exit 0
 end
 
@@ -64,6 +64,6 @@ end
 # If this is a subshell of a(n initialized) fish, no initialization
 # necessary. Otherwise:
 if not set -q SDKMAN_DIR
-    __fish_sdkman_run_in_bash "source $sdkman_init"
+    __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
