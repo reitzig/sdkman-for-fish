@@ -18,6 +18,7 @@ end
 # Hack for issue #19: Create version of sdkman-init that doesn't export
 # any environment variables.
 if not test -f "$__fish_sdkman_noexport_init"
+    mkdir -p (dirname $__fish_sdkman_noexport_init)
     sed -e 's/^\(\s*\).*\(export\|to_path\).*$/\1:/g' "$__fish_sdkman_init" \
         > $__fish_sdkman_noexport_init
 end
