@@ -10,7 +10,7 @@ install:
     - mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
     - cp completions/* "${HOME}"/.config/fish/completions/
     - cp conf.d/* "${HOME}"/.config/fish/conf.d/
-    #- cp functions/* "${HOME}"/.config/fish/functions/
+    - cp functions/* "${HOME}"/.config/fish/functions/
 
 jobs:
   include:
