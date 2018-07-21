@@ -8,7 +8,8 @@ set test_commands \
     "sdk list java" \
     "sdk update" \
     "sdk use ant 1.9.9" \
-    "sdk offline enable > /dev/null; sdk install ant foo"
+    "sdk offline enable > /dev/null; sdk install ant foo" \
+    "sdk use ant 1.9.9 > /dev/null; sdk broadcast"
 set test_count (count $test_commands)
 set check_count (math "3 * $test_count")
 

@@ -8,10 +8,22 @@
 # https://github.com/reitzig/sdkman-for-fish
 
 set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
+set __fish_sdkman_noexport_init "$HOME/.config/fisherman/sdkman-for-fish/sdkman-noexport-init.sh"
 
 # Guard: SDKMAN! needs to be installed
 if not test -f "$__fish_sdkman_init"
     exit 0
+end
+
+# Hack for issue #19: 
+# Create version of sdkman-init that doesn't export any environment variables.
+# Refresh if sdkman-init changed.
+if  begin    not test -f "$__fish_sdkman_noexport_init";
+          or     env test "$__fish_sdkman_init" -nt "$__fish_sdkman_noexport_init" 
+    end
+    mkdir -p (dirname $__fish_sdkman_noexport_init)
+    sed -e 's/^\(\s*\).*\(export\|to_path\).*$/\1:/g' "$__fish_sdkman_init" \
+        > $__fish_sdkman_noexport_init
 end
 
 # Runs the given command in bash, capturing some side effects
