@@ -12,7 +12,7 @@ Tested with fish 2.7.1 and SDKMAN! 5.7.1.
 With [fisherman] (install separately):
 
 ```
-fisher reitzig/sdkman-for-fish
+fisher add reitzig/sdkman-for-fish
 ```
 
 ## Usage
