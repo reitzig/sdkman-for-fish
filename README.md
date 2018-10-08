@@ -5,15 +5,17 @@
 Makes command `sdk` from [SDKMAN!] available in fish.
 Also provides auto-completion and adds binaries from installed SDKs to the PATH.
 
-Tested with fish 2.7.1 and SDKMAN! 5.7.1.
+Tested with fish 2.7.1 and SDKMAN! 5.7.3.
 
 ## Install
 
-With [fisherman] (install separately):
+With [fisher] (install separately):
 
 ```
 fisher add reitzig/sdkman-for-fish
 ```
+
+_Note:_ Only compatible with fisher v3 upwards; v2 is no longer supported.
 
 ## Usage
 
@@ -28,6 +30,6 @@ with `sdk` as you would expect.
      see [his comment on sdkman/sdkman-cli#294](https://github.com/sdkman/sdkman-cli/issues/294#issuecomment-318252058).
 
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
-[fisherman]: https://github.com/fisherman/fisherman
+[fisher]: https://github.com/jorgebucaran/fisher
 [travis-link]: https://travis-ci.org/reitzig/sdkman-for-fish
 [travis-badge]: https://travis-ci.org/reitzig/sdkman-for-fish.svg?branch=master
