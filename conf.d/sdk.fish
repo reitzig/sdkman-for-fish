@@ -8,7 +8,7 @@
 # https://github.com/reitzig/sdkman-for-fish
 
 set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
-set __fish_sdkman_noexport_init "$HOME/.config/fisherman/sdkman-for-fish/sdkman-noexport-init.sh"
+set __fish_sdkman_noexport_init "$HOME/.config/fisher/github.com/reitzig/sdkman-for-fish/sdkman-noexport-init.sh"
 
 # Guard: SDKMAN! needs to be installed
 if not test -f "$__fish_sdkman_init"
