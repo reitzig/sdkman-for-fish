@@ -23,14 +23,20 @@ echo "Testing the sdk wrapper"
 set failures 0
 for sdk_cmd in $test_commands
     echo "  Testing '$sdk_cmd'"
-    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash; echo \"\$?\" > status_bash; echo "\$PATH" > path_bash"
-    fish -c "$sdk_cmd > sout_fish; echo \"\$status\" > status_fish; echo "\$PATH" > path_fish"
+    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash; 
+             echo \"\$?\" > status_bash; 
+             echo \"\$PATH\" > path_bash;
+             echo \"\$ANT_HOME\" > anthome_bash"
+    fish -c "$sdk_cmd > sout_fish; 
+             echo \"\$status\" > status_fish; 
+             echo \"\$PATH\" > path_fish;
+             echo \"\$ANT_HOME\" > anthome_fish"
 
     # For nicer diffs: one entry per line, sorted
     string split ":" (cat path_bash) | sort > path_bash
     string split " " (cat path_fish) | sort > path_fish
 
-    for out in sout status path
+    for out in sout status path anthome
         if [ (checksum "$out"_bash) != (checksum "$out"_fish) ]
             echo "  - $out bad:"
             diff "$out"_bash "$out"_fish | sed -e 's/^/    /'
