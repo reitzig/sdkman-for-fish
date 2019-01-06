@@ -74,9 +74,10 @@ function __fish_sdkman_run_in_bash
     return $sdkStatus
 end
 
-# If this is a subshell of a(n initialized) fish, no initialization
-# necessary. Otherwise:
-if not set -q SDKMAN_DIR
+# If this is a subshell of a(n initialized) fish owned by the same user, 
+# no initialization necessary. 
+# Otherwise:
+if not set -q SDKMAN_DIR; or test (stat -c "%U" $SDKMAN_DIR) != (whoami)
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
