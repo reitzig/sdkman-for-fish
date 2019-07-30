@@ -1,28 +1,51 @@
-env:
-    - FISH=release-2
-    - FISH=release-3
-
 matrix:
-    allow_failures:
-        - env: FISH=release-3
+  include:
+    - os: linux
+      env: FISH=2
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:fish-shell/release-2"
+          packages:
+            - fish
+    - os: linux
+      env: FISH=3
+      addons:
+        apt:
+          sources:
+            - sourceline: "ppa:fish-shell/release-3"
+          packages:
+            - fish
+    - os: osx
+      env: FISH=2
+      addons:
+        homebrew:
+          packages:
+            - 'https://raw.githubusercontent.com/Homebrew/homebrew-core/799fef191cd2beac06930e1d1a8e7f308bd0f4b1/Formula/fish.rb' # 2.7.1
+          update: true # TODO: build should be green without, but isn't
+    - os: osx
+      env: FISH=3
+      addons:
+        homebrew:
+          packages:
+            - fish # --> latest, i.e. >=3.0.2
+          update: true # TODO: build should be green without, but isn't
+  allow_failures:
+    - env: FISH=3
 
-sudo: required
 before_install:
-    - sudo add-apt-repository -y ppa:fish-shell/${FISH}
-    - sudo apt-get update
-    - sudo apt-get -y install fish
-    - curl -s "https://get.sdkman.io" | bash
-    - bash test/prepare_tests.sh
+  - fish --version
+  - curl -s "https://get.sdkman.io" | bash
+  - bash test/prepare_tests.sh
 
 install:
-    - mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
-    - cp completions/* "${HOME}"/.config/fish/completions/
-    - cp conf.d/* "${HOME}"/.config/fish/conf.d/
-    - cp functions/* "${HOME}"/.config/fish/functions/
+  - mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
+  - cp completions/* "${HOME}"/.config/fish/completions/
+  - cp conf.d/* "${HOME}"/.config/fish/conf.d/
+  - cp functions/* "${HOME}"/.config/fish/functions/
 
 script:
-    - ruby test/completion.rb
-    - fish test/wrapper.fish
-    - fish test/reinitialize.fish
-    - bash -c "sdk install crash 1.3.0; sdk uninstall crash 1.3.0"; fish test/10_zombies_new.fish
-
+  - ruby test/completion.rb
+  - fish test/wrapper.fish
+  - fish test/reinitialize.fish
+  - bash -c "sdk install crash 1.3.0; sdk uninstall crash 1.3.0"; fish test/10_zombies_new.fish
