@@ -15,20 +15,26 @@ set check_count (math "3 * $test_count")
 
 set sdk_init "$HOME/.sdkman/bin/sdkman-init.sh"
 
-function checksum -a file
-    sha256sum $file | cut -d " " -f 1
+if [ (uname) = "Linux" ]
+  function checksum -a file
+      sha256sum $file | cut -d " " -f 1
+  end
+else # assume macOS
+  function checksum -a file
+      shasum -a 256 $file | cut -d " " -f 1
+  end
 end
 
 echo "Testing the sdk wrapper"
 set failures 0
 for sdk_cmd in $test_commands
     echo "  Testing '$sdk_cmd'"
-    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash; 
-             echo \"\$?\" > status_bash; 
+    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash;
+             echo \"\$?\" > status_bash;
              echo \"\$PATH\" > path_bash;
              echo \"\$ANT_HOME\" > anthome_bash"
-    fish -c "$sdk_cmd > sout_fish; 
-             echo \"\$status\" > status_fish; 
+    fish -c "$sdk_cmd > sout_fish;
+             echo \"\$status\" > status_fish;
              echo \"\$PATH\" > path_fish;
              echo \"\$ANT_HOME\" > anthome_fish"
 
