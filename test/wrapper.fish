@@ -52,4 +52,4 @@ rm {sout,status,path}_{bash,fish}
 
 echo "Ran $test_count commands with 3 checks each."
 echo "$failures/$check_count checks failed."
-exit (test $failures != 0)
+exit $failures
