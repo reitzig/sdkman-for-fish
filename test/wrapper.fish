@@ -34,7 +34,7 @@ for sdk_cmd in $test_commands
 
     # For nicer diffs: one entry per line, sorted
     string split ":" (cat path_bash) | sort > path_bash
-    string split " " (cat path_fish) | sort > path_fish
+    string split ":" (cat path_fish) | sort > path_fish
 
     for out in sout status path anthome
         if [ (checksum "$out"_bash) != (checksum "$out"_fish) ]
