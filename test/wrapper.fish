@@ -23,18 +23,21 @@ echo "Testing the sdk wrapper"
 set failures 0
 for sdk_cmd in $test_commands
     echo "  Testing '$sdk_cmd'"
-    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash; 
-             echo \"\$?\" > status_bash; 
+    bash -c "source \"$sdk_init\" && $sdk_cmd > sout_bash;
+             echo \"\$?\" > status_bash;
              echo \"\$PATH\" > path_bash;
              echo \"\$ANT_HOME\" > anthome_bash"
-    fish -c "$sdk_cmd > sout_fish; 
-             echo \"\$status\" > status_fish; 
+    fish -c "$sdk_cmd > sout_fish;
+             echo \"\$status\" > status_fish;
              echo \"\$PATH\" > path_fish;
              echo \"\$ANT_HOME\" > anthome_fish"
 
     # For nicer diffs: one entry per line, sorted
     string split ":" (cat path_bash) | sort > path_bash
-    string split " " (cat path_fish) | sort > path_fish
+    string split ":" (cat path_fish) \
+      | string split " " \
+      | sort > path_fish
+      # split by spaces for fish 2.*
 
     for out in sout status path anthome
         if [ (checksum "$out"_bash) != (checksum "$out"_fish) ]
@@ -52,4 +55,4 @@ rm {sout,status,path}_{bash,fish}
 
 echo "Ran $test_count commands with 3 checks each."
 echo "$failures/$check_count checks failed."
-exit (math $failures != 0)
+exit $failures
