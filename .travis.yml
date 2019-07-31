@@ -30,11 +30,9 @@ matrix:
           packages:
             - fish # --> latest, i.e. >=3.0.2
           update: true # TODO: build should be green without, but isn't
-  allow_failures:
-    - env: FISH=3
 
+sudo: required
 before_install:
-  - fish --version
   - curl -s "https://get.sdkman.io" | bash
   - bash test/prepare_tests.sh
 
@@ -43,6 +41,7 @@ install:
   - cp completions/* "${HOME}"/.config/fish/completions/
   - cp conf.d/* "${HOME}"/.config/fish/conf.d/
   - cp functions/* "${HOME}"/.config/fish/functions/
+  - uname -a; fish --version
 
 script:
   - ruby test/completion.rb
