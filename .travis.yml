@@ -2,10 +2,6 @@ env:
   - FISH=release-2
   - FISH=release-3
 
-matrix:
-  allow_failures:
-    - env: FISH=release-3
-
 sudo: required
 before_install:
   - sudo add-apt-repository -y ppa:fish-shell/${FISH}
@@ -19,6 +15,7 @@ install:
   - cp completions/* "${HOME}"/.config/fish/completions/
   - cp conf.d/* "${HOME}"/.config/fish/conf.d/
   - cp functions/* "${HOME}"/.config/fish/functions/
+  - uname -a; fish --version
 
 script:
   - ruby test/completion.rb
