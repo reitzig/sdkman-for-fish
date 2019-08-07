@@ -7,8 +7,6 @@ Also provides auto-completion and adds binaries from installed SDKs to the PATH.
 
 Tested with fish 2.7.1 and 3.0.2, and SDKMAN! 5.7.3.
 
-:warning: Tests indicate that fish 3.x is incompatible.
-
 ## Install
 
 With [fisher] (install separately):
