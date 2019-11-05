@@ -16,7 +16,7 @@ begin
 end
 
 begin
-    set SDKMAN_DIR "/" # belongs to root, who hopefully doesn't run this
+    set -x SDKMAN_DIR "/" # belongs to root, who hopefully doesn't run this
     set in_new_shell (fish -lc 'echo $SDKMAN_DIR')
     if [ "$in_new_shell" != "$proper_value" ]
       echo "SDKMAN_DIR reinitialized to $in_new_shell instead of $proper_value"
