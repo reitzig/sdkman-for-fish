@@ -23,3 +23,5 @@ begin
       exit 1
     end
 end
+
+# TODO: add test that fails if `test` in conf.d/sdk.fish:80 errors (cf issue #28 et al.)
