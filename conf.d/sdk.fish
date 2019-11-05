@@ -78,7 +78,11 @@ end
 # no initialization necessary.
 # Otherwise:
 if not set -q SDKMAN_DIR; or test (ls -ld "$SDKMAN_DIR" | awk '{print $3}') != (whoami)
+    # Force full initialization:
+    set -e SDKMAN_VERSION # TODO: do this in `sdk` or `__fish_sdkman_run_in_bash`?
+    set -e SDKMAN_CANDIDATES_API
     set -e SDKMAN_DIR
+
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
