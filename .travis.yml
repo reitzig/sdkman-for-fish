@@ -21,7 +21,7 @@ matrix:
       addons:
         homebrew:
           packages:
-            - 'https://raw.githubusercontent.com/Homebrew/homebrew-core/799fef191cd2beac06930e1d1a8e7f308bd0f4b1/Formula/fish.rb' # 2.7.1
+            - 'test/Homebrew-Formula-fish-2.7.1.rb'
           update: true # TODO: build should be green without, but isn't
     - os: osx
       env: FISH=3
