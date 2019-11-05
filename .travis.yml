@@ -47,4 +47,5 @@ script:
   - ruby test/completion.rb
   - fish test/wrapper.fish
   - fish test/reinitialize.fish
-  - bash -c "sdk install crash 1.3.0; sdk uninstall crash 1.3.0"; fish test/10_zombies_new.fish
+  - bash -c "source ${HOME}/.sdkman/bin/sdkman-init.sh && sdk install crash 1.3.0 && sdk uninstall crash 1.3.0" && fish test/10_zombies_new.fish
+  - bash -c "rm -rf ~/.sdkman &&  sed -i 's/^.*\(sdkman\|SDKMAN\).*$//g' ~/.bashrc && echo 'SDKMAN uninstalled'" && fish -c "echo 'y' | sdk" && fish -c "sdk version"
