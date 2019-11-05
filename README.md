@@ -2,8 +2,8 @@
 
 [![Build Status][travis-badge]][travis-link]
 
-Makes command `sdk` from [SDKMAN!] available in fish.
-Also provides auto-completion and adds binaries from installed SDKs to the PATH.
+Makes command `sdk` from [SDKMAN!] usable from fish, including auto-completion.
+Also adds binaries from installed SDKs to the PATH.
 
 Tested with fish 2.7.1 and 3.0.2, and SDKMAN! 5.7.3.
 
@@ -15,7 +15,10 @@ With [fisher] (install separately):
 fisher add reitzig/sdkman-for-fish
 ```
 
-_Note:_ Only compatible with fisher v3 upwards; v2 is no longer supported.
+_Note:_ 
+
+ - Only compatible with fisher v3 upwards; v2 is no longer supported.
+ - You have to install [SDKMAN!] separately.
 
 ## Usage
 
