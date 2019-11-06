@@ -5,7 +5,7 @@ matrix:
       addons:
         apt:
           sources:
-            - ppa:fish-shell/release-2
+            - sourceline: "ppa:fish-shell/release-2"
           packages:
             - fish
     - dist: bionic
@@ -13,7 +13,7 @@ matrix:
       addons:
         apt:
           sources:
-            - ppa:fish-shell/release-3
+            - sourceline: "ppa:fish-shell/release-3"
           packages:
             - fish
     - os: osx
