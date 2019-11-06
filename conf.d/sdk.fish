@@ -22,8 +22,8 @@ if  begin       not test -f "$__fish_sdkman_noexport_init";
           or    env test "$__fish_sdkman_init" -nt "$__fish_sdkman_noexport_init"
     end
     mkdir -p (dirname $__fish_sdkman_noexport_init)
-    sed -e 's/^\(\s*\).*\(export\|to_path\).*$/\1:/g' "$__fish_sdkman_init" \
-        > $__fish_sdkman_noexport_init
+    sed -E -e 's/^(\s*).*(export|to_path).*$/\1:/g' "$__fish_sdkman_init" \
+        > "$__fish_sdkman_noexport_init"
 end
 
 # Runs the given command in bash, capturing some side effects
@@ -66,7 +66,7 @@ function __fish_sdkman_run_in_bash
             if test -n value
                 set -gx $var $value
                 # Note: This makes SDKMAN_OFFLINE_MODE an environment variable.
-                #       That gives it the behavariour we _want_!
+                #       That gives it the behaviour we _want_!
             end
         end
     end

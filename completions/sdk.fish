@@ -28,8 +28,8 @@ function __fish_sdkman_using_command
     set cmd (commandline -opc)
 
     if [ (count $cmd) -eq 2 ]
-        if  contains $cmd[2] $argv
-        return 0
+        if contains $cmd[2] $argv
+            return 0
         end
     end
     return 1
@@ -39,8 +39,8 @@ function __fish_sdkman_specifying_candidate
     set cmd (commandline -opc)
 
     if [ (count $cmd) -eq 3 ] # currently, sdk does not support multiple versions
-        if contains $cmd[2] $argv ]
-        return 0
+        if contains $cmd[2] $argv
+            return 0
         end
     end
     return 1
