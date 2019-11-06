@@ -46,5 +46,5 @@ script:
   - ruby test/completion.rb
   - fish test/wrapper.fish
   - fish test/reinitialize.fish
-  - bash test/install_uninstall_candidate.sh > /dev/null && fish test/10_zombies_new.fish
+  - fish -c "sdk install crash 1.3.0; and sdk uninstall crash 1.3.0" > /dev/null && fish test/check_for_path_zombies.fish
   - bash test/remove_sdkman.sh > /dev/null && fish -c "echo 'y' | sdk" > /dev/null && fish -c "sdk version"
