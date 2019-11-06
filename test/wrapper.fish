@@ -15,8 +15,14 @@ set check_count (math "3 * $test_count")
 
 set sdk_init "$HOME/.sdkman/bin/sdkman-init.sh"
 
-function checksum -a file
-    sha256sum $file | cut -d " " -f 1
+if [ (uname) = "Linux" ]
+  function checksum -a file
+      sha256sum $file | cut -d " " -f 1
+  end
+else # assume macOS
+  function checksum -a file
+      shasum -a 256 $file | cut -d " " -f 1
+  end
 end
 
 echo "Testing the sdk wrapper"
