@@ -1,19 +1,19 @@
 matrix:
   include:
-    - os: linux
+    - dist: bionic
       env: FISH=2
       addons:
         apt:
           sources:
-            - sourceline: "ppa:fish-shell/release-2"
+            - ppa:fish-shell/release-2
           packages:
             - fish
-    - os: linux
+    - dist: bionic
       env: FISH=3
       addons:
         apt:
           sources:
-            - sourceline: "ppa:fish-shell/release-3"
+            - ppa:fish-shell/release-3
           packages:
             - fish
     - os: osx
