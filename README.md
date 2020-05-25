@@ -29,6 +29,22 @@ _Note:_
 It's all in the background; you should be able to run `sdk` and binaries installed
 with `sdk` as you would expect.
 
+## Contribute
+
+When you make changes, 
+please run the tests at least on one platform before creating a pull request.
+
+As the tests may mess up your own setup
+-- you have been warned! -- 
+the recommended way is to run the tests in a Docker container:
+ 
+```bash
+docker build -t sdkman-for-fish-tests -f test/Dockerfile .
+docker run --rm sdkman-for-fish-tests
+```
+   
+A run configuration for Jetbrains IDEs is included.
+
 ## Acknowledgements
 
  * Completion originally by [Ted Wise](https://github.com/ctwise); see his

@@ -1,0 +1,33 @@
+FROM ruby:2.5.8-slim-buster
+
+# Install dependencies
+RUN apt-get update \
+ && apt-get -y install \
+        fish \
+        curl \
+        unzip \
+        zip \
+ && apt-get clean
+
+WORKDIR app
+COPY test/Gemfile ./
+RUN bundle install \
+ && rm Gemfile
+
+# Switch to non-root user for test context
+ARG TEST_HOME="/home/test"
+RUN groupadd -r test \
+ && useradd --no-log-init -r -g test -m -d $TEST_HOME test
+USER test
+RUN curl -s "https://get.sdkman.io" | bash
+
+# "Install" sdkman-for-fish
+RUN mkdir -p $TEST_HOME/.config/fish/
+COPY completions $TEST_HOME/.config/fish/completions/
+COPY conf.d      $TEST_HOME/.config/fish/conf.d/
+COPY completions $TEST_HOME/.config/fish/functions/
+RUN ls -R $TEST_HOME/.config/fish/
+
+# Run tests
+COPY test ./
+CMD cucumber
