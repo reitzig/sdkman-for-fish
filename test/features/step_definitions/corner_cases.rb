@@ -43,3 +43,8 @@ Then('environment variable {env_name} has the original value') do |name|
 
   expect(@response[:stdout][-1]).to eq(@response[:stdout][0]) # reinitialization effective
 end
+
+Then('environment variable {env_name} cannot contain {string}') do |name, value|
+  env = run_fish_command('echo noop')[:env]
+  expect(env[name]).to_not match(/#{Regexp.escape(value)}/)
+end
