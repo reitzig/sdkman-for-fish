@@ -44,6 +44,7 @@ def run_bash_command(cmd)
       raise "Bash command failed: #{out}"
     end
 
+    puts File.readlines(files[:env]) # TODO remove
     {
       status: File.read(files[:status]).to_i,
       stdout: File.readlines(files[:stdout]),

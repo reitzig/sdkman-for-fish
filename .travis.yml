@@ -21,19 +21,25 @@ matrix:
       addons:
         homebrew:
           packages:
-            - fish # --> latest, i.e. >=3.0.2
+            - fish # --> latest, i.e. >=3.1.2
           update: true # TODO: build should be green without, but isn't
 
 before_install:
   - curl -s "https://get.sdkman.io" | bash
   - bundle install --gemfile=test/Gemfile --no-cache
-  - uname -a; fish --version; sdk version; ruby --version; cucumber --version
+  - |-
+    uname -a;
+    fish --version;
+    { source ~/.bash_profile || source ~/.bashrc; } && sdk version;
+    ruby --version;
+    echo "cucumber $(cucumber --version)";
 
 install:
-  - mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
-  - cp completions/* "${HOME}"/.config/fish/completions/
-  - cp conf.d/* "${HOME}"/.config/fish/conf.d/
-  - cp functions/* "${HOME}"/.config/fish/functions/
+  - |-
+    mkdir -p "${HOME}"/.config/fish/{completions,conf.d,functions}
+    cp completions/* "${HOME}"/.config/fish/completions/
+    cp conf.d/* "${HOME}"/.config/fish/conf.d/
+    cp functions/* "${HOME}"/.config/fish/functions/
 
 script:
   - (cd test && cucumber)
