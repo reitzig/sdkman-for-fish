@@ -7,6 +7,15 @@ Given(/^SDKMAN! candidate list is up to date$/) do
 end
 
 Given(/^candidate (\w+) is installed at version (\d+(?:\.\d+)*)$/) do |candidate, version|
+  # TODO: Can we mock-install instead?
+  #       Something like
+  #
+  #         mkdir -p ${SDKMAN_CANDIDATES_DIR}/${candidate}/{version}/bin \
+  #           && touch ${SDKMAN_CANDIDATES_DIR}/${candidate}/${version}/bin/${candidate} &&
+  #           ln -s ${SDKMAN_CANDIDATES_DIR}/${candidate}/current ${SDKMAN_CANDIDATES_DIR}/${candidate}/${version}
+  #
+  #       should be quite enough to trick sdk as far as we need it to trick.
+  #       Or is it?
   run_bash_command("sdk install #{candidate} #{version}") unless installed?(candidate, version)
 end
 

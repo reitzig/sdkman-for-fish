@@ -2,13 +2,13 @@
 
 [![Build Status][travis-badge]][travis-link]
 
-Makes command `sdk` from [SDKMAN!] usable from fish, including auto-completion.
+Makes command `sdk` from [SDKMAN!] usable from [fish], including auto-completion.
 Also adds binaries from installed SDKs to the PATH.
 
-Version 1.4.0 tested with 
+Version 1.5.0 tested with 
 
- - fish 2.7.1 and 3.0.2, and 
- - SDKMAN! 5.7.4, on
+ - fish 2.7.1 and 3.1.2, and 
+ - SDKMAN! 5.8.2, on
  - Ubuntu 18.04 LTS and macOS 10.13
 
 ## Install
@@ -38,12 +38,28 @@ As the tests may mess up your own setup
 -- you have been warned! -- 
 the recommended way is to run the tests in a Docker container:
  
-```bash
+```fish
 docker build -t sdkman-for-fish-tests -f test/Dockerfile .
 docker run --rm sdkman-for-fish-tests
 ```
    
 A run configuration for Jetbrains IDEs is included.
+
+It is a also possible to run individual features, for instance:
+
+```fish
+docker run --rm sdkman-for-fish-tests features/completions.feature
+```
+
+As a corollary, this is the fastest way to run all tests 
+(if you do not care about the report):
+
+```fish
+for f in features/*.feature
+  docker run --rm sdkman-for-fish-tests "$f" &
+done
+wait
+```
 
 ## Acknowledgements
 
@@ -53,6 +69,7 @@ A run configuration for Jetbrains IDEs is included.
      see [his comment on sdkman/sdkman-cli#294](https://github.com/sdkman/sdkman-cli/issues/294#issuecomment-318252058).
 
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
+[fish]: https://fishshell.com/
 [fisher]: https://github.com/jorgebucaran/fisher
 [travis-link]: https://travis-ci.org/reitzig/sdkman-for-fish
 [travis-badge]: https://travis-ci.org/reitzig/sdkman-for-fish.svg?branch=master

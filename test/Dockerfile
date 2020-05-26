@@ -21,6 +21,13 @@ RUN groupadd -r test \
 USER test
 RUN curl -s "https://get.sdkman.io" | bash
 
+# To speed up tests, uncomment this shared setup:
+#SHELL ["/bin/bash", "-c"]
+#RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
+# && sdk install ant 1.9.9 \
+# && sdk install ant 1.10.1 \
+# && sdk install crash
+
 # "Install" sdkman-for-fish
 RUN mkdir -p $TEST_HOME/.config/fish/
 COPY --chown=test:test completions $TEST_HOME/.config/fish/completions/
@@ -30,4 +37,5 @@ RUN ls -R $TEST_HOME/.config/fish/
 
 # Run tests
 COPY test ./
-CMD cucumber
+ENTRYPOINT ["cucumber"]
+CMD []
