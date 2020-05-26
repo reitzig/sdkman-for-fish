@@ -37,5 +37,3 @@ install:
 
 script:
   - (cd test && cucumber)
-  # TODO: Migrate these to Cucumber:
-  - bash test/remove_sdkman.sh > /dev/null && fish -c "echo 'y' | sdk" > /dev/null && fish -c "sdk version"
