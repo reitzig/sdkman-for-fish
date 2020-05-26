@@ -1,11 +1,11 @@
 Feature: Corner Cases
 
-    Scenario: SDKMAN_DIR unset
+    Scenario: sdk not initialized in this shell
         Given environment variable SDKMAN_DIR is not set
         When  a new Fish shell is launched
         Then  environment variable SDKMAN_DIR has the original value
 
-    Scenario: SDKMAN_DIR set to a location the current user can't write at
+    Scenario: sdk initialized for another user in this shell
         Given environment variable SDKMAN_DIR is set to "/"
         When  a new Fish shell is launched
         Then  environment variable SDKMAN_DIR has the original value

@@ -26,9 +26,9 @@ end
 
 def run_bash_command(cmd)
   Dir.mktmpdir(%w[sdkman-for-fish-test_ _fish]) do |tmp_dir|
-    files = %i[status stdout stderr env].map { |s|
+    files = %i[status stdout stderr env].map do |s|
       [s, FileUtils.touch("#{tmp_dir}/#{s}")[0]]
-    }.to_h
+    end.to_h
 
     out, status = Open3.capture2e(<<~BASH
       bash -c 'source "#{ENV['HOME']}/.sdkman/bin/sdkman-init.sh" && \
@@ -44,28 +44,24 @@ def run_bash_command(cmd)
       raise "Bash command failed: #{out}"
     end
 
-    puts File.readlines(files[:env]) # TODO remove
     {
       status: File.read(files[:status]).to_i,
       stdout: File.readlines(files[:stdout]),
       stderr: File.readlines(files[:stderr]),
-      env: File.readlines(files[:env]).map { |l| l.strip.split('=', 2) }.to_h
+      env: File.readlines(files[:env]).map do |l|
+             l.strip.split('=', 2) \
+               if l.include?('=') # NB: on macOS, weird stuff is printed by env
+           end.compact \
+              .to_h
     }
   end
 end
 
-# # For nicer diffs: one entry per line, sorted
-# string split ":" (cat path_bash) | sort > path_bash
-# string split ":" (cat path_fish) \
-#       | string split " " \
-#       | sort > path_fish
-# # split by spaces for fish 2.*
-
 def run_fish_command(cmd)
   Dir.mktmpdir(%w[sdkman-for-fish-test_ _fish]) do |tmp_dir|
-    files = %i[status stdout stderr env].map { |s|
+    files = %i[status stdout stderr env].map do |s|
       [s, FileUtils.touch("#{tmp_dir}/#{s}")[0]]
-    }.to_h
+    end.to_h
 
     out, status = Open3.capture2e(<<~FISH
       fish -c '#{cmd} > #{files[:stdout]} ^ #{files[:stderr]}; \
@@ -84,7 +80,11 @@ def run_fish_command(cmd)
       status: File.read(files[:status]).to_i,
       stdout: File.readlines(files[:stdout]),
       stderr: File.readlines(files[:stderr]),
-      env: File.readlines(files[:env]).map { |l| l.strip.split('=', 2) }.to_h
+      env: File.readlines(files[:env]).map do |l|
+             l.strip.split('=', 2) \
+               if l.include?('=') # NB: on macOS, weird stuff is printed by env
+           end.compact \
+              .to_h
     }
   end
 end
