@@ -4,10 +4,9 @@ require 'open3'
 
 module CompletionHelper
   def complete(cmd)
-    completions = run_fish_command("complete -C\"sdk #{cmd}\"")
+    completions = run_fish_command("complete -C\"sdk #{cmd}\"")[:stdout]
 
-    completions.split("\n") \
-               .map { |line| line.split(/\s+/)[0].strip }
+    completions.map { |line| line.split(/\s+/)[0].strip }
     # TODO: Why do we get duplicates in the Docker container?
   end
 end

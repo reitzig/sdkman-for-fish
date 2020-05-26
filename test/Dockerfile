@@ -23,9 +23,9 @@ RUN curl -s "https://get.sdkman.io" | bash
 
 # "Install" sdkman-for-fish
 RUN mkdir -p $TEST_HOME/.config/fish/
-COPY completions $TEST_HOME/.config/fish/completions/
-COPY conf.d      $TEST_HOME/.config/fish/conf.d/
-COPY completions $TEST_HOME/.config/fish/functions/
+COPY --chown=test:test completions $TEST_HOME/.config/fish/completions/
+COPY --chown=test:test conf.d      $TEST_HOME/.config/fish/conf.d/
+COPY --chown=test:test functions   $TEST_HOME/.config/fish/functions/
 RUN ls -R $TEST_HOME/.config/fish/
 
 # Run tests

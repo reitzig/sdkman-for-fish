@@ -19,3 +19,12 @@ ParameterType(
                    end
                end
 )
+
+ParameterType(
+  name: 'env_glob',
+  regexp: /[A-Z_*]+/,
+  type: Regexp,
+  transformer: lambda do |glob|
+    /^#{glob.gsub('*', '[A-Z_]*')}=/
+  end
+)
