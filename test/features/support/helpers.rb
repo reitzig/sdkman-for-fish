@@ -48,7 +48,7 @@ def run_bash_command(cmd)
       status: File.read(files[:status]).to_i,
       stdout: File.readlines(files[:stdout]),
       stderr: File.readlines(files[:stderr]),
-      env: File.readlines(files[:env])
+      env: File.readlines(files[:env]).map { |l| l.strip.split('=', 2) }.to_h
     }
   end
 end
@@ -83,7 +83,7 @@ def run_fish_command(cmd)
       status: File.read(files[:status]).to_i,
       stdout: File.readlines(files[:stdout]),
       stderr: File.readlines(files[:stderr]),
-      env: File.readlines(files[:env])
+      env: File.readlines(files[:env]).map { |l| l.strip.split('=', 2) }.to_h
     }
   end
 end

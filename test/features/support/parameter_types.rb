@@ -21,6 +21,13 @@ ParameterType(
 )
 
 ParameterType(
+  name: 'env_name',
+  regexp: /[A-Z_]+/,
+  type: String,
+  transformer: ->(s) { s }
+)
+
+ParameterType(
   name: 'env_glob',
   regexp: /[A-Z_*]+/,
   type: Regexp,
