@@ -88,14 +88,14 @@ complete -c sdk -f -n '__fish_sdkman_no_command' \
     -d 'Install new version'
 complete -c sdk -f -n '__fish_sdkman_using_command i install' \
         -a "(__fish_sdkman_candidates)"
+# TODO complete available versions --> issue #4
 complete -c sdk -f -n '__fish_sdkman_specifying_candidate i install' \
-            # TODO complete available versions --> #4
             -a 'a.b.c' \
             -d "version list unavailable"
 complete -c sdk -f -n '__fish_sdkman_specifying_candidate i install' \
             -a 'x.y.z' \
-            -d "Add your own; specify path!"
-                # Implicit: complete files as fourth parameter
+            -d "Specify path to install custom version."
+# Implicit: complete files as fourth parameter
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 3 i install'
                     # block
 
