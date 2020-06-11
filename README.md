@@ -67,6 +67,12 @@ wait
      [blog post from 2016](http://tedwise.com/2016/02/26/using-sdkman-with-the-fish-shell).
  * Binary loading originally by [Koala Yeung](https://github.com/yookoala);
      see [his comment on sdkman/sdkman-cli#294](https://github.com/sdkman/sdkman-cli/issues/294#issuecomment-318252058).
+ * While this is predominantly a personal project,
+   the initial migration to Cucumber tests was done as spike on
+     [20% time](https://en.wikipedia.org/wiki/20%25_Project) 
+   graciously provided by 
+     [codecentric](https://codecentric.de).
+   Thank you!
 
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
 [fish]: https://fishshell.com/
