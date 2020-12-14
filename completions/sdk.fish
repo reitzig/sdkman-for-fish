@@ -174,7 +174,7 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 b broadcast
 
 # help
 complete -c sdk -f -n '__fish_sdkman_no_command' \
-    -a 'h help' \
+    -a 'help' \
     -d 'Display help message'
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 h help'
         # block
@@ -212,15 +212,39 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 update'
 # flush
 complete -c sdk -f -n '__fish_sdkman_no_command' \
     -a 'flush' \
-    -d 'Clear out caches'
+    -d 'Clear out archives and temporary storage folders'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
         -a 'broadcast' \
-        -d 'Re-download news'
+        -d 'Clear out the broadcast/news cache'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
         -a 'archives' \
         -d 'Remove downloads'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'temp' \
-        -d 'Clear installation prep folder'
+        -a 'tmp' \
+        -d 'Clear out staging work folder'
+complete -c sdk -f -n '__fish_sdkman_using_command flush' \
+        -a 'version' \
+        -d 'Flush version file'
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 flush'
             # block
+
+# env
+complete -c sdk -f -n '__fish_sdkman_no_command' \
+    -a 'e env' \
+    -d 'Load environment from .sdkmanrc file'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'init' \
+        -d 'Initialize .sdkmanrc file'
+complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 e env'
+            # block
+
+# home
+complete -c sdk -f -n '__fish_sdkman_no_command' \
+    -a 'h home' \
+    -d 'Show installation folder of given candidate'
+complete -c sdk -f -n '__fish_sdkman_using_command h home' \
+        -a "(__fish_sdkman_candidates_with_versions)"
+complete -c sdk -f -n '__fish_sdkman_specifying_candidate h home' \
+            -a "(__fish_sdkman_installed_versions)"
+complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 h home'
+                # block
