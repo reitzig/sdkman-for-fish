@@ -4,12 +4,16 @@ Feature: Wrapping of Bash
     the effect sdk has on the Bash environment carries
     over the current Fish session.
 
-    We verifiy equality of (standard) output, exit code, and environment variables.
+    We verify equality of (standard) output, exit code, and environment variables.
 
     Background:
         Given SDKMAN! candidate list is up to date
         And   candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
+        And   file /tmp/env-test/.sdkmanrc exists with content
+            """
+            ant=1.9.9
+            """
 
     Scenario Outline:
         When we run "<command>" in Bash and Fish
@@ -28,3 +32,5 @@ Feature: Wrapping of Bash
             | sdk use ant 1.9.9                                   |
             | sdk offline enable > /dev/null; sdk install ant foo |
             | sdk use ant 1.9.9 > /dev/null; sdk broadcast        |
+            | sdk home ant 1.9.9                                  |
+            | cd /tmp/env-test; sdk env                           |

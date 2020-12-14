@@ -1,3 +1,5 @@
+require 'fileutils'
+
 $index_updated = false # TODO: Hack since Cucumber doesn't have Feature-level hooks
 Given(/^SDKMAN! candidate list is up to date$/) do
   unless $index_updated
@@ -37,6 +39,11 @@ When(/^candidate (\w+) is uninstalled$/) do |candidate|
     _uninstall_candidate_version(candidate_dir)
   end
   puts `ls ~/.sdkman/candidates/#{candidate}`
+end
+
+Given(/^file ([a-zA-Z0-9-_.\/]+) exists with content/) do |filename,content|
+  FileUtils.mkdir_p(File.dirname(filename))
+  File.write(filename, content)
 end
 
 # Uninstall all SDKMAN! candidates

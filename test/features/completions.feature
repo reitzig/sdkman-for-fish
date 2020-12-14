@@ -20,8 +20,11 @@ Feature: Shell Completion
             | b   | b, broadcast                           | /^[^b]+$/  |
             | c   | c, current                             | /^[^c]+$/  |
             | d   | d, default                             | /^[^d]+$/  |
+            | e   | e, env                                 | /^[^e]+$/  |
             | f   | flush                                  | /^[^f]+$/  |
-            | h   | h, help                                | /^[^h]+$/  |
+            | h   | h, help, home                          | /^[^h]+$/  |
+            | he  | help                                   |            |
+            | ho  | home                                   |            |
             | i   | i, install                             | /^[^i]+$/  |
             | in  | install                                |            |
             | l   | list, ls                               | /^[^l]+$/  |
@@ -36,7 +39,6 @@ Feature: Shell Completion
             # Currently uncovered (except by fuzzy matches);
             # include negatives to prevent accidents:
             | a   |                                        | /^a/       |
-            | e   |                                        | /^e/       |
             | g   |                                        | /^g/       |
             | j   |                                        | /^j/       |
             | k   |                                        | /^k/       |
@@ -175,14 +177,38 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd     | completions               | exclusions                          |
-            |         | archives, broadcast, temp | /^(?!archives\|broadcast\|temp).*$/ |
-            | b       | broadcast                 | /^(?!broadcast).*$/                 |
-            | a       | archives                  | /^(?!archives\|broadcast).*$/       |
-            | t       | temp                      | /^(?!temp\|broadcast).*$/           |
-            | x       |                           | /.*/                                |
-            | 'temp ' |                           | /.*/                                |
+            | cmd     | completions                       | exclusions                                  |
+            |         | archives, broadcast, tmp, version | /^(?!archives\|broadcast\|tmp\|version).*$/ |
+            | b       | broadcast                         | /^(?!broadcast).*$/                         |
+            | a       | archives                          | /^(?!archives\|broadcast).*$/               |
+            | t       | tmp                               | /^(?!tmp\|broadcast).*$/                    |
+            | v       | version                           | /^(?!version\|archives).*$/                 |
+            | x       |                                   | /.*/                                        |
+            | 'tmp '  |                                   | /.*/                                        |
 
+    Scenario Outline: Completion for 'home'
+        When the user enters "home <cmd>" into the prompt
+        Then completion should propose "<completions>"
+        But  completion should not propose <exclusions>
+        Examples:
+            | cmd           | completions   | exclusions    |
+            |               | ant, crash    | gradle        |
+            | an            | ant           | crash, gradle |
+            | j             |               | /.*/          |
+            | 1.            |               | /.*/          |
+            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
+            | 'ant 1.10.1 ' |               | /.*/          |
+
+    Scenario Outline: Completion for 'env'
+        When the user enters "env <cmd>" into the prompt
+        Then completion should propose "<completions>"
+        But  completion should not propose <exclusions>
+        Examples:
+            | cmd     | completions | exclusions     |
+            |         | init        | /^(?!init).*$/ |
+            | i       | init        | /^(?!init).*$/ |
+            | a       |             | /.*/           |
+            | 'init ' |             | /.*/           |
 
     Scenario Outline: Completion for commands without parameters
         When the user enters "<cmd>" into the prompt

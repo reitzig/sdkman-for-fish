@@ -8,7 +8,7 @@ Also adds binaries from installed SDKs to the PATH.
 Version 1.4.0 tested with 
 
  - fish 2.7.1 and 3.1.2, and 
- - SDKMAN! 5.8.2, on
+ - SDKMAN! 5.9.1, on
  - Ubuntu 18.04 LTS and macOS 10.13
 
 ## Install
