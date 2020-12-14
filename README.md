@@ -16,7 +16,7 @@ Version 1.4.0 tested with
 With [fisher] (install separately):
 
 ```
-fisher add reitzig/sdkman-for-fish@v1.4.0
+fisher install reitzig/sdkman-for-fish@v1.4.0
 ```
 
 _Note:_ 
