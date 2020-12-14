@@ -1,27 +1,30 @@
 # SDKMAN! for fish
 
-[![Build Status][travis-badge]][travis-link]
+[![license](https://img.shields.io/github/license/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/blob/master/LICENSE)
+[![release](https://img.shields.io/github/release/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/releases/latest)
+[![GitHub release date](https://img.shields.io/github/release-date/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/releases)
+![Tests](https://github.com/reitzig/sdkman-for-fish/workflows/Tests/badge.svg?branch=master)
 
 Makes command `sdk` from [SDKMAN!] usable from [fish], including auto-completion.
 Also adds binaries from installed SDKs to the PATH.
 
-Version 1.4.0 tested with 
+Version 2.0.0 has been tested with 
 
- - fish 2.7.1 and 3.1.2, and 
- - SDKMAN! 5.9.1, on
- - Ubuntu 18.04 LTS and macOS 10.13
+ - fish 3.1, and 
+ - SDKMAN! 5.9, on
+ - Ubuntu 20.04 LTS and macOS 10.15
 
 ## Install
 
 With [fisher] (install separately):
 
 ```
-fisher add reitzig/sdkman-for-fish@v1.4.0
+fisher add reitzig/sdkman-for-fish@v2.0.0
 ```
 
 _Note:_ 
 
- - Only compatible with fisher v3 upwards; v2 is no longer supported.
+ - Only compatible with fisher v4 upwards; v3 is no longer supported.
  - You have to install [SDKMAN!] separately.
 
 ## Usage

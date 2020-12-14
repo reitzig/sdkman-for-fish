@@ -1,0 +1,93 @@
+name: Tests
+
+on:
+  push:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+      - reopened
+
+jobs:
+  tests:
+    name: "Scenarios"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - 'ubuntu-20.04'
+          - 'macos-latest'
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+
+      - name: Install Test Dependencies
+        working-directory: test
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Install SDKMAN!
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+          source "$HOME/.sdkman/bin/sdkman-init.sh"
+          sdk version
+
+      - name: Install fish (Linux)
+        if: matrix.os == 'ubuntu-20.04'
+        uses: fish-actions/install-fish@v1.0.0
+
+      - name: Install fish (macOS)
+        if: matrix.os == 'macos-latest'
+        run: |
+          brew install fish
+
+      - name: Install sdkman-for-fish
+        shell: fish "{0}"
+        run: |
+          fish --version
+          curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+          fisher install .
+
+      - name: Confirm install
+        shell: fish "{0}"
+        run: |
+          fish --version
+          sdk version
+
+      - name: Run Tests
+        working-directory: test
+        run: |
+          cucumber --publish-quiet
+
+  confirm-installation:
+    name: "Check fisher install"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install fish
+        uses: fish-actions/install-fish@v1.0.0
+
+      - name: Install SDKMAN!
+        run: |
+          curl -s "https://get.sdkman.io" | bash
+
+      - name: Install fisher
+        shell: fish "{0}"
+        run: |
+          fish --version
+          curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+          fisher --version
+
+      - name: Install sdkman-for-fish
+        shell: fish "{0}"
+        run: |
+          fisher install reitzig/sdkman-for-fish
+
+      - name: Confirm install
+        shell: fish "{0}"
+        run: |
+          fisher ls
+          sdk version

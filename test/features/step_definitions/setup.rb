@@ -34,14 +34,14 @@ def _uninstall_candidate_version(candidate_dir)
 end
 
 When(/^candidate (\w+) is uninstalled$/) do |candidate|
-  puts `ls ~/.sdkman/candidates/#{candidate}`
+  log `ls ~/.sdkman/candidates/#{candidate}`
   Dir["#{ENV['HOME']}/.sdkman/candidates/#{candidate}/*"].each do |candidate_dir|
     _uninstall_candidate_version(candidate_dir)
   end
-  puts `ls ~/.sdkman/candidates/#{candidate}`
+  log `ls ~/.sdkman/candidates/#{candidate}`
 end
 
-Given(/^file ([a-zA-Z0-9-_.\/]+) exists with content/) do |filename,content|
+Given(/^file ([a-zA-Z0-9\-_.\/]+) exists with content/) do |filename,content|
   FileUtils.mkdir_p(File.dirname(filename))
   File.write(filename, content)
 end

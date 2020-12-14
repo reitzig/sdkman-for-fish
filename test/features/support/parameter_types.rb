@@ -6,6 +6,7 @@ ParameterType(
   type: Array,
   transformer: lambda do |*patterns|
                  patterns \
+                   .select { |s| !s.nil? } # Huh? Well, if it helps...
                    .map(&:strip) \
                    .map do |s|
                      s = if %r{^/(.*)/$} =~ s

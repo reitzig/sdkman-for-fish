@@ -1,4 +1,4 @@
-FROM ruby:2.5.8-slim-buster
+FROM ruby:2.7-slim-buster
 
 # Install dependencies
 RUN apt-get update \
@@ -7,6 +7,8 @@ RUN apt-get update \
         curl \
         unzip \
         zip \
+        ruby-dev \
+        build-essential \
  && apt-get clean
 
 WORKDIR app
@@ -38,4 +40,4 @@ RUN ls -R $TEST_HOME/.config/fish/
 # Run tests
 COPY test ./
 ENTRYPOINT ["cucumber"]
-CMD []
+CMD ["--publish-quiet"]
