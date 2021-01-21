@@ -235,6 +235,12 @@ complete -c sdk -f -n '__fish_sdkman_no_command' \
 complete -c sdk -f -n '__fish_sdkman_using_command e env' \
         -a 'init' \
         -d 'Initialize .sdkmanrc file'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'install' \
+        -d 'Install all candidate versions listed in .sdkmanrc'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'clear' \
+        -d 'Unload currently loaded environment'
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 e env'
             # block
 
