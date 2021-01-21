@@ -34,3 +34,4 @@ Feature: Wrapping of Bash
             | sdk use ant 1.9.9 > /dev/null; sdk broadcast        |
             | sdk home ant 1.9.9                                  |
             | cd /tmp/env-test; sdk env                           |
+            | cd /tmp/env-test; sdk env; sdk env clear            |

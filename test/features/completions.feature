@@ -125,6 +125,35 @@ Feature: Shell Completion
             | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
             | 'ant 1.10.1 ' |               | /.*/          |
 
+    Scenario Outline: Completion for 'home'
+        When the user enters "home <cmd>" into the prompt
+        Then completion should propose "<completions>"
+        But  completion should not propose <exclusions>
+        Examples:
+            | cmd           | completions   | exclusions    |
+            |               | ant, crash    | gradle        |
+            | an            | ant           | crash, gradle |
+            | j             |               | /.*/          |
+            | 1.            |               | /.*/          |
+            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
+            | 'ant 1.10.1 ' |               | /.*/          |
+
+    Scenario Outline: Completion for 'env'
+        When the user enters "env <cmd>" into the prompt
+        Then completion should propose "<completions>"
+        But  completion should not propose <exclusions>
+        Examples:
+            | cmd           | completions             | exclusions                      |
+            |               | init, install, clear    | /^(?!init\|install\|clear).*$/  |
+            | i             | init, install           | /^(?!init\|install).*$/         |
+            | ini           | init                    | /^(?!init).*$/                  |
+            | ins           | install                 | /^(?!install).*$/               |
+            | c             | clear                   | /^(?!clear).*$/                 |
+            | a             |                         | /.*/                            |
+            | 'init '       |                         | /.*/                            |
+            | 'clear '      |                         | /.*/                            |
+            | 'install '    |                         | /.*/                            |
+
     Scenario Outline: Completion for 'current'
         When the user enters "current <cmd>" into the prompt
         Then completion should propose "<completions>"
@@ -185,30 +214,6 @@ Feature: Shell Completion
             | v       | version                           | /^(?!version\|archives).*$/                 |
             | x       |                                   | /.*/                                        |
             | 'tmp '  |                                   | /.*/                                        |
-
-    Scenario Outline: Completion for 'home'
-        When the user enters "home <cmd>" into the prompt
-        Then completion should propose "<completions>"
-        But  completion should not propose <exclusions>
-        Examples:
-            | cmd           | completions   | exclusions    |
-            |               | ant, crash    | gradle        |
-            | an            | ant           | crash, gradle |
-            | j             |               | /.*/          |
-            | 1.            |               | /.*/          |
-            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
-            | 'ant 1.10.1 ' |               | /.*/          |
-
-    Scenario Outline: Completion for 'env'
-        When the user enters "env <cmd>" into the prompt
-        Then completion should propose "<completions>"
-        But  completion should not propose <exclusions>
-        Examples:
-            | cmd     | completions | exclusions     |
-            |         | init        | /^(?!init).*$/ |
-            | i       | init        | /^(?!init).*$/ |
-            | a       |             | /.*/           |
-            | 'init ' |             | /.*/           |
 
     Scenario Outline: Completion for commands without parameters
         When the user enters "<cmd>" into the prompt
