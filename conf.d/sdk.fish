@@ -42,7 +42,8 @@ function __fish_sdkman_run_in_bash
              echo -e \"\$?\" > $pipe;
              env | grep -e '^SDKMAN_\|^PATH' >> $pipe;
              env | grep -i -E \"^(`echo \${SDKMAN_CANDIDATES_CSV} | sed 's/,/|/g'`)_HOME\" >> $pipe;
-             echo \"SDKMAN_OFFLINE_MODE=\${SDKMAN_OFFLINE_MODE}\" >> $pipe" # it's not an environment variable!
+             echo \"SDKMAN_OFFLINE_MODE=\${SDKMAN_OFFLINE_MODE}\" >> $pipe;
+             echo \"SDKMAN_ENV=\${SDKMAN_ENV}\" >> $pipe" # it's not an environment variable!
     set bashDump (cat $pipe; rm $pipe)
 
     set sdkStatus $bashDump[1]
@@ -65,7 +66,7 @@ function __fish_sdkman_run_in_bash
 
             if test -n value
                 set -gx $var $value
-                # Note: This makes SDKMAN_OFFLINE_MODE an environment variable.
+                # Note: This makes SDKMAN_{OFFLINE_MODE,ENV} environment variables.
                 #       That gives it the behaviour we _want_!
             end
         end
