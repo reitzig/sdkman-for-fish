@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # NB: We have a Docker setup for testing -- why do all this?
+      #     Because we want to confirm it runs on macOS, and
+      #     there are no Docker images based on frickin' macOS.
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
@@ -36,14 +40,9 @@ jobs:
           source "$HOME/.sdkman/bin/sdkman-init.sh"
           sdk version
 
-      - name: Install fish (Linux)
-        if: matrix.os == 'ubuntu-20.04'
-        uses: fish-actions/install-fish@v1.0.0
-
-      - name: Install fish (macOS)
-        if: matrix.os == 'macos-latest'
-        run: |
-          brew install fish
+      - name: Install fish
+        # TODO: Change to recent version, when the maintainer creates a tag
+        uses: fish-actions/install-fish@d6d9d26231a15f8d9a6b3e74b3db45512440e3e8
 
       - name: Install sdkman-for-fish
         shell: fish "{0}"
@@ -65,10 +64,16 @@ jobs:
 
   confirm-installation:
     name: "Check fisher install"
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - 'ubuntu-20.04'
+          - 'macos-latest'
     steps:
       - name: Install fish
-        uses: fish-actions/install-fish@v1.0.0
+        #uses: fish-actions/install-fish@v1.2.0
+        uses: fish-actions/install-fish@master # TODO: change back after #2
 
       - name: Install SDKMAN!
         run: |
@@ -84,7 +89,7 @@ jobs:
       - name: Install sdkman-for-fish
         shell: fish "{0}"
         run: |
-          fisher install reitzig/sdkman-for-fish
+          fisher install reitzig/sdkman-for-fish@${{ github.sha }}
 
       - name: Confirm install
         shell: fish "{0}"
