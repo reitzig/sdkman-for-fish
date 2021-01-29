@@ -60,7 +60,7 @@ jobs:
       - name: Run Tests
         working-directory: test
         run: |
-          cucumber --publish-quiet
+          cucumber --publish-quiet --tags "not @pending"
 
   confirm-installation:
     name: "Check fisher install"

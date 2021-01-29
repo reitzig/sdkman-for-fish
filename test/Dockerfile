@@ -40,4 +40,4 @@ RUN ls -R $TEST_HOME/.config/fish/
 # Run tests
 COPY test ./
 ENTRYPOINT ["cucumber"]
-CMD ["--publish-quiet"]
+CMD ["--publish-quiet", "--tags", "not @pending"]

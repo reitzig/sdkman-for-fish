@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'tempfile'
 
 $index_updated = false # TODO: Hack since Cucumber doesn't have Feature-level hooks
 Given(/^SDKMAN! candidate list is up to date$/) do
@@ -46,14 +47,24 @@ Given(/^file ([a-zA-Z0-9\-_.\/]+) exists with content/) do |filename,content|
   File.write(filename, content)
 end
 
-# Uninstall all SDKMAN! candidates
-# TODO: Run after every scenario, this makes tests very slow.
-#       Currently, Cucumber doesn't have Feature-level hooks, so we have to work around:
-#       --> install only if not already installed;
-#           if the test needs a candidate to _not_ be there, make it explicit.
-#       --> clean up after _all_ features at least
-at_exit do
-  Dir["#{ENV['HOME']}/.sdkman/candidates/*/*"].each do |candidate_dir|
-    _uninstall_candidate_version(candidate_dir)
+$config_file = "#{ENV['HOME']}/.sdkman/etc/config"
+$backup_config_file = nil
+def _restore_config # called in After hook
+  unless $backup_config_file.nil?
+    FileUtils.mv($backup_config_file, $config_file)
+    $backup_config_file = nil
   end
+end
+
+Given(/^SDKMAN! config sets ([a-z_]+) to (.*)$/) do |key,value|
+  if $backup_config_file.nil?
+    $backup_config_file = Tempfile.new('sdkman_config_backup')
+    FileUtils.cp($config_file, $backup_config_file)
+  end
+
+  config = File.readlines($config_file).map { |line| line.split("=").map { |v| v.strip } }.to_h
+  config[key] = value
+  new_config_string = config.map { |k,v| "#{k}=#{v}" }.join("\n")
+
+  File.write($config_file, new_config_string)
 end
