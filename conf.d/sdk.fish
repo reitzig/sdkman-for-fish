@@ -7,8 +7,11 @@
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
+set -q XDG_DATA_HOME; or set XDG_DATA_HOME ~/.local/share
+set sdkman_data $XDG_DATA_HOME/sdkman-for-fish
+
 set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
-set __fish_sdkman_noexport_init "$HOME/.config/fisher/github.com/reitzig/sdkman-for-fish/sdkman-noexport-init.sh"
+set __fish_sdkman_noexport_init "$sdkman_data/sdkman-noexport-init.sh"
 
 # Guard: SDKMAN! needs to be installed
 if not test -f "$__fish_sdkman_init"
@@ -44,7 +47,7 @@ function __fish_sdkman_run_in_bash
              env | grep -i -E \"^(`echo \${SDKMAN_CANDIDATES_CSV} | sed 's/,/|/g'`)_HOME\" >> $pipe;
              echo \"SDKMAN_OFFLINE_MODE=\${SDKMAN_OFFLINE_MODE}\" >> $pipe;
              echo \"SDKMAN_ENV=\${SDKMAN_ENV}\" >> $pipe" # it's not an environment variable!
-    set bashDump (cat $pipe; rm $pipe)
+    set bashDump (cat $pipe; command rm $pipe)
 
     set sdkStatus $bashDump[1]
     set bashEnv $bashDump[2..-1]
