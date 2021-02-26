@@ -83,3 +83,12 @@ if not set -q SDKMAN_DIR; or test (ls -ld "$SDKMAN_DIR" | awk '{print $3}') != (
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
+# Set up autoenv
+if grep -q "^sdkman_auto_env=true" "$SDKMAN_DIR/etc/config"
+    function __fish_sdkman_autoenv --on-variable PWD
+        # Run the (modified) init script, which performs the checks and calls for us!
+        __fish_sdkman_run_in_bash "source \"$__fish_sdkman_noexport_init\""
+
+        set -x SDKMAN_OLD_PWD "$PWD"
+    end
+end
