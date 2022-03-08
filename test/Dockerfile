@@ -6,8 +6,10 @@ RUN apt-get update \
         build-essential \
         curl \
         fish \
+        nano \
         ruby \
         ruby-dev \
+        tree \
         unzip \
         zip \
  && apt-get clean \
@@ -26,11 +28,13 @@ USER test
 RUN curl -s "https://get.sdkman.io" | bash
 
 # To speed up tests, uncomment this shared setup:
-#SHELL ["/bin/bash", "-c"]
-#RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
-# && sdk install ant 1.9.9 \
-# && sdk install ant 1.10.1 \
-# && sdk install crash
+SHELL ["/bin/bash", "-c"]
+RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
+ && sdk install ant 1.9.7 \
+ && sdk install ant 1.9.9 \
+ && sdk install ant 1.10.1 \
+ && sdk install kscript 1.5.0 \
+ && sdk install kscript 1.6.0
 
 # "Install" sdkman-for-fish
 RUN mkdir -p $TEST_HOME/.config/fish/

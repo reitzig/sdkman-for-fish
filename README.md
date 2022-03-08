@@ -26,11 +26,21 @@ _Note:_
 
  - Only compatible with fisher v4 upwards; v3 is no longer supported.
  - You have to install [SDKMAN!] separately.
+ - If you have installed SDKMAN! at a custom location, you need to add
+   ```fish
+   set -g __sdkman_custom_dir /your/path/to/sdkman
+   ```
+   to a fish config file
+     [run _before_](https://fishshell.com/docs/current/language.html#configuration-files)
+   `.config/fish/conf.d/sdk.fish`;
+   for example, you can use `.config/fish/conf.d/config_sdk.fish`.
+
 
 ## Usage
 
 It's all in the background; you should be able to run `sdk` and binaries installed
 with `sdk` as you would expect.
+
 
 ## Contribute
 
@@ -63,6 +73,7 @@ for f in features/*.feature
 done
 wait
 ```
+
 
 ## Acknowledgements
 
