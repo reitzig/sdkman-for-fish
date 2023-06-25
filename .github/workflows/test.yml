@@ -15,10 +15,10 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'ubuntu-20.04'
+          - 'ubuntu-22.04'
           - 'macos-latest'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       # NB: We have a Docker setup for testing -- why do all this?
       #     Because we want to confirm it runs on macOS, and
@@ -41,14 +41,14 @@ jobs:
           sdk version
 
       - name: Install fish
-        # TODO: Change to recent version, when the maintainer creates a tag
-        uses: fish-actions/install-fish@d6d9d26231a15f8d9a6b3e74b3db45512440e3e8
+        uses: fish-actions/install-fish@v1.1.0
 
       - name: Install sdkman-for-fish
         shell: fish "{0}"
         run: |
           fish --version
-          curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+          curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source \
+              && fisher install jorgebucaran/fisher
           fisher install .
 
       - name: Confirm install
@@ -68,12 +68,11 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'ubuntu-20.04'
+          - 'ubuntu-22.04'
           - 'macos-latest'
     steps:
       - name: Install fish
-        #uses: fish-actions/install-fish@v1.2.0
-        uses: fish-actions/install-fish@master # TODO: change back after #2
+        uses: fish-actions/install-fish@v1.1.0
 
       - name: Install SDKMAN!
         run: |
@@ -83,7 +82,8 @@ jobs:
         shell: fish "{0}"
         run: |
           fish --version
-          curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher
+          curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source \
+              && fisher install jorgebucaran/fisher
           fisher --version
 
       - name: Install sdkman-for-fish

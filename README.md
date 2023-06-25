@@ -19,7 +19,7 @@ Version 2.0.0 has been tested with
 With [fisher] (install separately):
 
 ```
-fisher add reitzig/sdkman-for-fish@v2.0.0
+fisher install reitzig/sdkman-for-fish@v2.0.0
 ```
 
 _Note:_ 
