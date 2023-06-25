@@ -5,7 +5,7 @@ Feature: Shell Completion
         Given SDKMAN! candidate list is up to date
         And   candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
-        And   candidate crash is installed
+        And   candidate kscript is installed
 
     Scenario: Command list correct
         When the user enters " " into the prompt
@@ -74,19 +74,19 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd           | completions   | exclusions    |
-            |               | ant, crash    | gradle        |
-            | a             | ant           | gradle        |
-            | j             |               | /.*/          |
-            | 1.            |               | /.*/          |
-            | an            | ant           | gradle, crash | # some installed
-            | gr            |               | /.*/          | # none installed
-            | xyz           |               | /.*/          | # no such candidate
-            | 'an '         |               | /.*/          | # no such candidate installed
-            | 'ant 1'       | 1.10.1, 1.9.9 | /^\w+$/       |
-            | 'ant 1.10.'   | 1.10.1        | 1.9.9         |
-            | 'ant 2'       |               | /.*/          |
-            | 'ant 1.10.1 ' |               | /.*/          | # only one version at a time
+            | cmd           | completions   | exclusions      |
+            |               | ant, kscript  | gradle          |
+            | a             | ant           | gradle          |
+            | j             |               | /.*/            |
+            | 1.            |               | /.*/            |
+            | an            | ant           | gradle, kscript | # some installed
+            | gr            |               | /.*/            | # none installed
+            | xyz           |               | /.*/            | # no such candidate
+            | 'an '         |               | /.*/            | # no such candidate installed
+            | 'ant 1'       | 1.10.1, 1.9.9 | /^\w+$/         |
+            | 'ant 1.10.'   | 1.10.1        | 1.9.9           |
+            | 'ant 2'       |               | /.*/            |
+            | 'ant 1.10.1 ' |               | /.*/            | # only one version at a time
 
     Scenario Outline: Completion for 'list'
         When the user enters "list <cmd>" into the prompt
@@ -94,7 +94,7 @@ Feature: Shell Completion
         But  completion should not propose <exclusions>
         Examples:
             | cmd    | completions | exclusions |
-            | an     | ant         | crash      |
+            | an     | ant         | kscript    |
             | xyz    |             | /.*/       |
             | 1.     |             | /.*/       |
             | 'ant ' |             | /.*/       |
@@ -104,39 +104,39 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd           | completions   | exclusions    |
-            |               | ant, crash    | gradle        |
-            | an            | ant           | crash, gradle |
-            | j             |               | /.*/          |
-            | 1.            |               | /.*/          |
-            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
-            | 'ant 1.10.1 ' |               | /.*/          |
+            | cmd           | completions   | exclusions      |
+            |               | ant, kscript  | gradle          |
+            | an            | ant           | kscript, gradle |
+            | j             |               | /.*/            |
+            | 1.            |               | /.*/            |
+            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/         |
+            | 'ant 1.10.1 ' |               | /.*/            |
 
     Scenario Outline: Completion for 'default'
         When the user enters "default <cmd>" into the prompt
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd           | completions   | exclusions    |
-            |               | ant, crash    | gradle        |
-            | an            | ant           | crash, gradle |
-            | j             |               | /.*/          |
-            | 1.            |               | /.*/          |
-            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
-            | 'ant 1.10.1 ' |               | /.*/          |
+            | cmd           | completions   | exclusions      |
+            |               | ant, kscript  | gradle          |
+            | an            | ant           | kscript, gradle |
+            | j             |               | /.*/            |
+            | 1.            |               | /.*/            |
+            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/         |
+            | 'ant 1.10.1 ' |               | /.*/            |
 
     Scenario Outline: Completion for 'home'
         When the user enters "home <cmd>" into the prompt
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd           | completions   | exclusions    |
-            |               | ant, crash    | gradle        |
-            | an            | ant           | crash, gradle |
-            | j             |               | /.*/          |
-            | 1.            |               | /.*/          |
-            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/       |
-            | 'ant 1.10.1 ' |               | /.*/          |
+            | cmd           | completions   | exclusions      |
+            |               | ant, kscript  | gradle          |
+            | an            | ant           | kscript, gradle |
+            | j             |               | /.*/            |
+            | 1.            |               | /.*/            |
+            | 'ant '        | 1.10.1, 1.9.9 | /^\w+$/         |
+            | 'ant 1.10.1 ' |               | /.*/            |
 
     Scenario Outline: Completion for 'env'
         When the user enters "env <cmd>" into the prompt
@@ -171,12 +171,12 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd    | completions | exclusions    |
-            |        | ant, crash  | gradle        |
-            | an     | ant         | crash, gradle |
-            | j      |             | /.*/          |
-            | 1.     |             | /.*/          |
-            | 'ant ' |             | /^\w+$/       |
+            | cmd    | completions  | exclusions      |
+            |        | ant, kscript | gradle          |
+            | an     | ant          | kscript, gradle |
+            | j      |              | /.*/            |
+            | 1.     |              | /.*/            |
+            | 'ant ' |              | /^\w+$/         |
 
     Scenario Outline: Completion for 'offline'
         When the user enters "offline <cmd>" into the prompt

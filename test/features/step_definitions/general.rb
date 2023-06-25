@@ -24,6 +24,6 @@ Then(/^the output is$/) do |text|
   expect(@response_fish_script).to eq(text.strip)
 end
 
-Then(/^file ([a-zA-Z0-9-_.\/]+) contains$/) do |file,content|
+Then(/^file ([a-zA-Z0-9\-_.\/]+) contains$/) do |file,content|
   expect(File.readlines(file).join("").strip).to eq(content.strip)
 end

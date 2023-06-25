@@ -7,8 +7,8 @@ Feature: Support autoenv setting
         And   candidate ant is installed at version 1.9.7
         And   candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
-        And   candidate crash is installed at version 1.2.11
-        And   candidate crash is installed at version 1.3.0
+        And   candidate kscript is installed at version 1.5.0
+        And   candidate kscript is installed at version 1.6.0
 
     Scenario: No action if autoenv turned off
         Given SDKMAN! config sets sdkman_auto_env to false
@@ -59,7 +59,7 @@ Feature: Support autoenv setting
         And   file /tmp/autoenv-test-1/.sdkmanrc exists with content
             """
             ant=1.9.9
-            crash=1.2.11
+            kscript=1.5.0
             """
         And   file /tmp/autoenv-test-2/.sdkmanrc exists with content
             """
@@ -67,18 +67,18 @@ Feature: Support autoenv setting
             """
         When we run fish script
             """
-            echo (basename (realpath $ANT_HOME)),(basename (realpath $CRASH_HOME)) > /tmp/autoenv-test.log
+            echo (basename (realpath $ANT_HOME)),(basename (realpath $KSCRIPT_HOME)) > /tmp/autoenv-test.log
             cd /tmp/autoenv-test-1
-            echo (basename (realpath $ANT_HOME)),(basename (realpath $CRASH_HOME)) >> /tmp/autoenv-test.log
+            echo (basename (realpath $ANT_HOME)),(basename (realpath $KSCRIPT_HOME)) >> /tmp/autoenv-test.log
             cd ../autoenv-test-2
-            echo (basename (realpath $ANT_HOME)),(basename (realpath $CRASH_HOME)) >> /tmp/autoenv-test.log
+            echo (basename (realpath $ANT_HOME)),(basename (realpath $KSCRIPT_HOME)) >> /tmp/autoenv-test.log
             cd ..
-            echo (basename (realpath $ANT_HOME)),(basename (realpath $CRASH_HOME)) >> /tmp/autoenv-test.log
+            echo (basename (realpath $ANT_HOME)),(basename (realpath $KSCRIPT_HOME)) >> /tmp/autoenv-test.log
             """
         Then file /tmp/autoenv-test.log contains
             """
-            1.10.1,1.3.0
-            1.9.9,1.2.11
-            1.9.7,1.3.0
-            1.10.1,1.3.0
+            1.10.1,1.6.0
+            1.9.9,1.5.0
+            1.9.7,1.6.0
+            1.10.1,1.6.0
             """
