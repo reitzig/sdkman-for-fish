@@ -8,7 +8,10 @@
 # https://github.com/reitzig/sdkman-for-fish
 
 set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
-set __fish_sdkman_noexport_init "$HOME/.config/fisher/github.com/reitzig/sdkman-for-fish/sdkman-noexport-init.sh"
+
+# Copied from https://github.com/jorgebucaran/fisher/blob/main/functions/fisher.fish to be consistent:
+set --query fisher_path || set --local fisher_path $__fish_config_dir
+set __fish_sdkman_noexport_init "$fisher_path/functions/__sdkman-noexport-init.sh"
 
 # Guard: SDKMAN! needs to be installed
 if not test -f "$__fish_sdkman_init"
