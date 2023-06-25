@@ -165,13 +165,6 @@ complete -c sdk -f -n '__fish_sdkman_no_command' \
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 v version'
         # block
 
-# broadcast
-complete -c sdk -f -n '__fish_sdkman_no_command' \
-    -a 'b broadcast' \
-    -d 'Display broadcast message'
-complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 b broadcast'
-        # block
-
 # help
 complete -c sdk -f -n '__fish_sdkman_no_command' \
     -a 'help' \
@@ -214,13 +207,7 @@ complete -c sdk -f -n '__fish_sdkman_no_command' \
     -a 'flush' \
     -d 'Clear out archives and temporary storage folders'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'broadcast' \
-        -d 'Clear out the broadcast/news cache'
-complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'archives' \
-        -d 'Remove downloads'
-complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'tmp' \
+        -a 'temp' \
         -d 'Clear out staging work folder'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
         -a 'version' \
