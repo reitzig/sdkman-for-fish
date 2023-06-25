@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="All features in features: sdkman-for-fish" type="CucumberRunConfigurationType" factoryName="Cucumber">
+  <configuration default="false" name="All features (mock install)" type="CucumberRunConfigurationType" factoryName="Cucumber">
     <module name="sdkman-for-fish" />
     <predefined_log_file enabled="true" id="RUBY_CUCUMBER" />
     <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="RUBY_ARGS" VALUE="" />
@@ -9,6 +9,7 @@
     <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="myPassParentEnvs" VALUE="true" />
     <envs>
       <env name="JRUBY_OPTS" value="-X+O" />
+      <env name="RUN_WITH_REAL_INSTALL" value="false" />
     </envs>
     <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
     <EXTENSION ID="RubyCoverageRunConfigurationExtension" runner="rcov">
@@ -45,7 +46,7 @@
     <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="USE_CUSTOM_RUNNER" VALUE="false" />
     <CUCUMBER_RUN_CONFIG_SETTINGS_ID NAME="SETTINGS_VERSION" VALUE="2" />
     <method v="2">
-      <option name="RunConfigurationTask" enabled="false" run_configuration_name="Build Test Image" run_configuration_type="docker-deploy" />
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="Build Test Image" run_configuration_type="docker-deploy" />
     </method>
   </configuration>
 </component>

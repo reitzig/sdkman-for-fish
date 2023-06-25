@@ -28,13 +28,19 @@ USER test
 RUN curl -s "https://get.sdkman.io" | bash
 
 # To speed up tests, uncomment this shared setup:
+ARG shared_test_setup="false"
+ENV SHARED_TEST_SETUP=$shared_test_setup
 SHELL ["/bin/bash", "-c"]
-RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
- && sdk install ant 1.9.7 \
- && sdk install ant 1.9.9 \
- && sdk install ant 1.10.1 \
- && sdk install kscript 1.5.0 \
- && sdk install kscript 1.6.0
+RUN if [ "${shared_test_setup}" = 'true' ]; then \
+         source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
+      && sdk update \
+      && sdk install ant 1.9.7 \
+      && sdk install ant 1.9.9 \
+      && sdk install ant 1.10.1 \
+      && sdk install kscript 1.5.0 \
+      && sdk install kscript 1.6.0 \
+      ; \
+    fi
 
 # "Install" sdkman-for-fish
 RUN mkdir -p $TEST_HOME/.config/fish/

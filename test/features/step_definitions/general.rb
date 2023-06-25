@@ -11,7 +11,7 @@ When('we run fish script') do |script_content|
   script_file = Tempfile.new('fish_script')
   File.write(script_file, script_content)
 
-  out, status = Open3.capture2e("fish #{script_file.path}")
+  out, status = Open3.capture2e($test_env, "fish #{script_file.path}")
   unless status.success?
     warn(out)
     raise "Fish command failed: #{out}"

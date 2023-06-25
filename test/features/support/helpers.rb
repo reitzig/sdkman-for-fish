@@ -6,7 +6,7 @@ require 'tmpdir'
 def list_installed_candidates
   candidates = {}
 
-  Dir["#{ENV['HOME']}/.sdkman/candidates/*/*"].each do |candidate_dir|
+  Dir["#{$test_env['SDKMAN_CANDIDATES_DIR']}/*/*"].each do |candidate_dir|
     %r{/([^/]+)/([^/]+)$}.match(candidate_dir) do |match|
       candidate = match[1]
       version = match[2]
@@ -30,8 +30,8 @@ def run_bash_command(cmd)
       [s, FileUtils.touch("#{tmp_dir}/#{s}")[0]]
     end.to_h
 
-    out, status = Open3.capture2e(<<~BASH
-      bash -c 'source "#{ENV['HOME']}/.sdkman/bin/sdkman-init.sh" && \
+    out, status = Open3.capture2e($test_env, <<~BASH
+      bash -c 'source "#{$test_env['SDKMAN_DIR']}/bin/sdkman-init.sh" && \
                #{cmd} > #{files[:stdout]} 2> #{files[:stderr]}; \
                echo "$?" > #{files[:status]}; \
                env > #{files[:env]}; \
@@ -63,7 +63,7 @@ def run_fish_command(cmd)
       [s, FileUtils.touch("#{tmp_dir}/#{s}")[0]]
     end.to_h
 
-    out, status = Open3.capture2e(<<~FISH
+    out, status = Open3.capture2e($test_env, <<~FISH
       fish -c '#{cmd} > #{files[:stdout]} 2> #{files[:stderr]}; \
                echo $status > #{files[:status]}; \
                env > #{files[:env]}; \

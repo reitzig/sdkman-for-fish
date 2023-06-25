@@ -3,7 +3,7 @@
 require 'fileutils'
 
 Given(/^SDKMAN! is not installed$/) do
-  FileUtils.rm_rf("#{ENV['HOME']}/.sdkman")
+  FileUtils.rm_rf("#{$test_env['SDKMAN_DIR']}")
 end
 
 When('sdk is called and user answers {string}') do |answer|
@@ -11,13 +11,13 @@ When('sdk is called and user answers {string}') do |answer|
 end
 
 Then(/^SDKMAN! is absent$/) do
-  expect(Dir["#{ENV['HOME']}/.sdkman/*"].count).to eq(0)
+  expect(Dir["#{$test_env['SDKMAN_DIR']}/*"].count).to eq(0)
   response = run_bash_command("sdk version")
   expect(response[:status]).to_not eq(0)
 end
 
 Then('SDKMAN! is present') do
-  expect(Dir["#{ENV['HOME']}/.sdkman/*"].count).to be > 1
+  expect(Dir["#{$test_env['SDKMAN_DIR']}/*"].count).to be > 1
   response = run_bash_command("sdk version")
   expect(response[:status]).to eq(0)
 end

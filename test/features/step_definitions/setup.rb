@@ -1,37 +1,49 @@
 require 'fileutils'
 require 'tempfile'
 
+def _mock_install(candidate, version)
+  bin_dir = "#{$test_env['SDKMAN_CANDIDATES_DIR']}/#{candidate}/#{version}/bin"
+  FileUtils.mkdir_p(bin_dir)
+  FileUtils.touch("#{bin_dir}/#{candidate}")
+  FileUtils.ln_s(bin_dir, "#{$test_env['SDKMAN_CANDIDATES_DIR']}/#{candidate}/current", force: true)
+end
+
 Given(/^candidate (\w+) is installed at version (\d+(?:\.\d+)*)$/) do |candidate, version|
-  # TODO: Can we mock-install instead?
-  #       Something like
-  #
-  #         mkdir -p ${SDKMAN_CANDIDATES_DIR}/${candidate}/{version}/bin \
-  #           && touch ${SDKMAN_CANDIDATES_DIR}/${candidate}/${version}/bin/${candidate} &&
-  #           ln -s ${SDKMAN_CANDIDATES_DIR}/${candidate}/current ${SDKMAN_CANDIDATES_DIR}/${candidate}/${version}
-  #
-  #       should be quite enough to trick sdk as far as we need it to trick.
-  #       Or is it?
-  run_bash_command("sdk install #{candidate} #{version}") unless installed?(candidate, version)
+  if $run_with_real_install
+    run_bash_command("sdk install #{candidate} #{version}") unless installed?(candidate, version)
+  else
+    _mock_install(candidate, version)
+  end
 end
 
 Given(/^candidate (\w+) is installed$/) do |candidate|
-  run_bash_command("sdk install #{candidate}") unless installed?(candidate)
+  if $run_with_real_install
+    run_bash_command("sdk install #{candidate}") unless installed?(candidate)
+  else
+    _mock_install(candidate, "1.2.3")
+  end
 end
 
 def _uninstall_candidate_version(candidate_dir)
   %r{/([^/]+)/([^/]+)$}.match(candidate_dir) do |match|
     candidate = match[1]
     version = match[2]
-    run_bash_command("sdk rm #{candidate} #{version}") unless version == 'current'
+    if $run_with_real_install
+      run_bash_command("sdk rm #{candidate} #{version}") unless version == 'current'
+    else
+      FileUtils.rm_rf("#{$test_env['SDKMAN_CANDIDATES_DIR']}/#{candidate}/#{version}/")
+      # TODO: Should we ever use this to uninstall only _one_ version of a candidate,
+      #       we need to re-link current
+    end
   end
 end
 
 When(/^candidate (\w+) is uninstalled$/) do |candidate|
   log `ls ~/.sdkman/candidates/#{candidate}`
-  Dir["#{ENV['HOME']}/.sdkman/candidates/#{candidate}/*"].each do |candidate_dir|
+  Dir["#{$test_env['SDKMAN_CANDIDATES_DIR']}/#{candidate}/*"].each do |candidate_dir|
     _uninstall_candidate_version(candidate_dir)
   end
-  log `ls ~/.sdkman/candidates/#{candidate}`
+  log `ls #{$test_env['SDKMAN_CANDIDATES_DIR']}/#{candidate}`
 end
 
 Given(/^file ([a-zA-Z0-9\-_.\/]+) exists with content/) do |filename,content|
@@ -55,7 +67,7 @@ And(/^fish config file ([a-zA-Z0-9\-_.\/]+) exists with content$/) do |filename,
   $fish_config_files << file
 end
 
-$config_file = "#{ENV['HOME']}/.sdkman/etc/config"
+$config_file = "#{$test_env['SDKMAN_DIR']}/etc/config"
 $backup_config_file = nil
 def _restore_config # called in After hook
   unless $backup_config_file.nil?
