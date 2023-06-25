@@ -13,10 +13,11 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 
-- Compatibility with SDKMAN! 5.9.2
+- Compatibility with SDKMAN! 5.18.2
   - Completions for `env`, `home`, `flush` (issue #35)
   - Correct behaviour of `env clear`. 
   - Honor `sdkman_auto_env=true` (issue #38)
+  - `broadcast` removed
   - TODO: custom SDKMAN! install path (issue #34)
 - Compatibility with fisher 4 (PR #37, #39)
 

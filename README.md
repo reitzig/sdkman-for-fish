@@ -10,9 +10,9 @@ Also adds binaries from installed SDKs to the PATH.
 
 Version 2.0.0 has been tested with 
 
- - fish 3.1.2, and 
- - SDKMAN! 5.11.0, on
- - Ubuntu 20.04 LTS and macOS 10.15
+ - fish 3.6.1, and 
+ - SDKMAN! 5.18.2, on
+ - Ubuntu 22.04 LTS and macOS 12.6
 
 ## Install
 

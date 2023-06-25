@@ -9,7 +9,7 @@ Feature: Shell Completion
 
     Scenario: Command list correct
         When the user enters " " into the prompt
-        Then completion should propose "b, broadcast, c, current, d, default, flush, h, help, i, install, list, ls, offline, rm, selfupdate, u, ug, uninstall, update, upgrade, use, v, version"
+        Then completion should propose "c, current, d, default, flush, h, help, i, install, list, ls, offline, rm, selfupdate, u, ug, uninstall, update, upgrade, use, v, version"
 
     Scenario Outline: Commands complete
         When the user enters "<cmd>" into the prompt
@@ -17,7 +17,6 @@ Feature: Shell Completion
         But  completion should not propose <exclusions>
         Examples:
             | cmd | completions                            | exclusions |
-            | b   | b, broadcast                           | /^[^b]+$/  |
             | c   | c, current                             | /^[^c]+$/  |
             | d   | d, default                             | /^[^d]+$/  |
             | e   | e, env                                 | /^[^e]+$/  |
@@ -39,6 +38,7 @@ Feature: Shell Completion
             # Currently uncovered (except by fuzzy matches);
             # include negatives to prevent accidents:
             | a   |                                        | /^a/       |
+            | b   |                                        | /^b/       |
             | g   |                                        | /^g/       |
             | j   |                                        | /^j/       |
             | k   |                                        | /^k/       |
@@ -143,16 +143,16 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd           | completions             | exclusions                      |
-            |               | init, install, clear    | /^(?!init\|install\|clear).*$/  |
-            | i             | init, install           | /^(?!init\|install).*$/         |
-            | ini           | init                    | /^(?!init).*$/                  |
-            | ins           | install                 | /^(?!install).*$/               |
-            | c             | clear                   | /^(?!clear).*$/                 |
-            | b             |                         | /.*/                            |
-            | 'init '       |                         | /.*/                            |
-            | 'clear '      |                         | /.*/                            |
-            | 'install '    |                         | /.*/                            |
+            | cmd        | completions          | exclusions                     |
+            |            | init, install, clear | /^(?!init\|install\|clear).*$/ |
+            | i          | init, install        | /^(?!init\|install).*$/        |
+            | ini        | init                 | /^(?!init).*$/                 |
+            | ins        | install              | /^(?!install).*$/              |
+            | c          | clear                | /^(?!clear).*$/                |
+            | b          |                      | /.*/                           |
+            | 'init '    |                      | /.*/                           |
+            | 'clear '   |                      | /.*/                           |
+            | 'install ' |                      | /.*/                           |
 
     Scenario Outline: Completion for 'current'
         When the user enters "current <cmd>" into the prompt
@@ -206,25 +206,21 @@ Feature: Shell Completion
         Then completion should propose "<completions>"
         But  completion should not propose <exclusions>
         Examples:
-            | cmd     | completions                       | exclusions                                  |
-            |         | archives, broadcast, tmp, version | /^(?!archives\|broadcast\|tmp\|version).*$/ |
-            | b       | broadcast                         | /^(?!broadcast).*$/                         |
-            | a       | archives                          | /^(?!archives\|broadcast).*$/               |
-            | t       | tmp                               | /^(?!tmp\|broadcast).*$/                    |
-            | v       | version                           | /^(?!version\|archives).*$/                 |
-            | x       |                                   | /.*/                                        |
-            | 'tmp '  |                                   | /.*/                                        |
+            | cmd    | completions   | exclusions                |
+            |        | temp, version | /^(?!temp\|version).*$/   |
+            | t      | temp          | /^(?!temp).*$/           |
+            | v      | version       | /^(?!version).*$/         |
+            | x      |               | /.*/                      |
+            | 'tmp ' |               | /.*/                      |
 
     Scenario Outline: Completion for commands without parameters
         When the user enters "<cmd>" into the prompt
         Then completion should not propose /.*/
         Examples:
-            | cmd           |
-            | 'version '    |
-            | 'version a'   |
-            | 'broadcast '  |
-            | 'broadcast a' |
-            | 'help '       |
-            | 'help a'      |
-            | 'update '     |
-            | 'update a'    |
+            | cmd         |
+            | 'version '  |
+            | 'version a' |
+            | 'help '     |
+            | 'help a'    |
+            | 'update '   |
+            | 'update a'  |

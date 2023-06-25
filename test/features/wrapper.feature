@@ -31,7 +31,7 @@ Feature: Wrapping of Bash
             | sdk update                                          |
             | sdk use ant 1.9.9                                   |
             | sdk offline enable > /dev/null; sdk install ant foo |
-            | sdk use ant 1.9.9 > /dev/null; sdk broadcast        |
+            | sdk use ant 1.9.9 > /dev/null; sdk version          |
             | sdk home ant 1.9.9                                  |
             | cd /tmp/env-test; sdk env                           |
             | cd /tmp/env-test; sdk env; sdk env clear            |
