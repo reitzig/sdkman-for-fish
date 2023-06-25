@@ -54,7 +54,9 @@ jobs:
       - name: Confirm install
         shell: fish "{0}"
         run: |
+          cat /etc/os-release || sw_vers || true
           fish --version
+          fisher --version
           sdk version
 
       - name: Run Tests
@@ -94,5 +96,7 @@ jobs:
       - name: Confirm install
         shell: fish "{0}"
         run: |
+          cat /etc/os-release || sw_vers || true
+          fish --version
           fisher ls
           sdk version
