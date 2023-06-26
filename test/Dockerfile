@@ -1,15 +1,17 @@
-FROM ruby:2.7-slim-buster
+FROM ubuntu
 
 # Install dependencies
 RUN apt-get update \
  && apt-get -y install \
-        fish \
+        build-essential \
         curl \
+        fish \
+        ruby \
+        ruby-dev \
         unzip \
         zip \
-        ruby-dev \
-        build-essential \
- && apt-get clean
+ && apt-get clean \
+ && gem install bundler
 
 WORKDIR app
 COPY test/Gemfile ./

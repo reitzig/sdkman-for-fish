@@ -64,7 +64,7 @@ def run_fish_command(cmd)
     end.to_h
 
     out, status = Open3.capture2e(<<~FISH
-      fish -c '#{cmd} > #{files[:stdout]} ^ #{files[:stderr]}; \
+      fish -c '#{cmd} > #{files[:stdout]} 2> #{files[:stderr]}; \
                echo $status > #{files[:status]}; \
                env > #{files[:env]}; \
               '
