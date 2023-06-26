@@ -3,11 +3,19 @@
 # Makes command and binaries from SDKMAN! available in fish.
 # Delegates to bash for the `sdk` command.
 
-# Copyright (c) 2018 Raphael Reitzig
+# Copyright (c) 2018-2022 Raphael Reitzig
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
-set __fish_sdkman_init "$HOME/.sdkman/bin/sdkman-init.sh"
+# Account for custom install locations
+if set -q __sdkman_custom_dir
+    set -gx SDKMAN_DIR "$__sdkman_custom_dir"
+else
+    # This is the default location:
+    set -gx SDKMAN_DIR "$HOME/.sdkman"
+end
+
+set __fish_sdkman_init "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 # Copied from https://github.com/jorgebucaran/fisher/blob/main/functions/fisher.fish to be consistent:
 set --query fisher_path || set --local fisher_path $__fish_config_dir
@@ -81,17 +89,16 @@ end
 # If this is a subshell of a(n initialized) fish owned by the same user,
 # no initialization necessary.
 # Otherwise:
-if not set -q SDKMAN_DIR; or test (ls -ld "$SDKMAN_DIR" | awk '{print $3}') != (whoami)
-    set -e SDKMAN_DIR
+if not set -q SDKMAN_CANDIDATES_DIR; or test (ls -ld "$SDKMAN_CANDIDATES_DIR" | awk '{print $3}') != (whoami)
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
-# Set up autoenv
+# Set up auto_env
 if grep -q "^sdkman_auto_env=true" "$SDKMAN_DIR/etc/config"
     function __fish_sdkman_autoenv --on-variable PWD
         # Run the (modified) init script, which performs the checks and calls for us!
         __fish_sdkman_run_in_bash "source \"$__fish_sdkman_noexport_init\""
 
-        set -x SDKMAN_OLD_PWD "$PWD"
+        set -x SDKMAN_OLD_PWD "$PWD" # needed by the Bash implementation
     end
 end

@@ -1,11 +1,11 @@
 # Defines autocompletion for SDKMAN!
 
-# Copyright (c) 2018 Raphael Reitzig
+# Copyright (c) 2018-2022 Raphael Reitzig
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
 # Guard: SDKMAN! needs to be installed
-if not test -f "$HOME/.sdkman/bin/sdkman-init.sh"
+if not test -f "$SDKMAN_DIR/bin/sdkman-init.sh"
     exit 0
 end
 
