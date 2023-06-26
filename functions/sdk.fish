@@ -1,3 +1,9 @@
+# Wrapper function for SDKMAN!
+
+# Copyright (c) 2018-2023 Raphael Reitzig
+# MIT License (MIT)
+# https://github.com/reitzig/sdkman-for-fish
+
 function sdk -d "Manage SDKs"
     # Guard: SDKMAN! needs to be installed
     if not test -f "$__fish_sdkman_init"

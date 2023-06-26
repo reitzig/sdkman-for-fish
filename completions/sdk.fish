@@ -1,6 +1,6 @@
 # Defines autocompletion for SDKMAN!
 
-# Copyright (c) 2018-2022 Raphael Reitzig
+# Copyright (c) 2018-2023 Raphael Reitzig
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 

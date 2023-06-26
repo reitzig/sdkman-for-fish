@@ -3,7 +3,7 @@
 # Makes command and binaries from SDKMAN! available in fish.
 # Delegates to bash for the `sdk` command.
 
-# Copyright (c) 2018-2022 Raphael Reitzig
+# Copyright (c) 2018-2023 Raphael Reitzig
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 

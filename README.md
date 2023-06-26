@@ -1,9 +1,9 @@
 # SDKMAN! for fish
 
-[![license](https://img.shields.io/github/license/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/blob/master/LICENSE)
+[![license](https://img.shields.io/github/license/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/blob/main/LICENSE)
 [![release](https://img.shields.io/github/release/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/releases/latest)
 [![GitHub release date](https://img.shields.io/github/release-date/reitzig/sdkman-for-fish.svg)](https://github.com/reitzig/sdkman-for-fish/releases)
-[![Test](https://github.com/reitzig/sdkman-for-fish/workflows/Tests/badge.svg?branch=master&event=push)](https://github.com/reitzig/sdkman-for-fish/actions?query=workflow%3ATests+branch%3Amaster+event%3Apush++)
+[![Test](https://github.com/reitzig/sdkman-for-fish/workflows/Tests/badge.svg?branch=main&event=push)](https://github.com/reitzig/sdkman-for-fish/actions?query=workflow%3ATests+branch%3Amain+event%3Apush++)
 [![CodeQL](https://github.com/reitzig/sdkman-for-fish/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/reitzig/sdkman-for-fish/actions/workflows/codeql-analysis.yml)
 
 Makes command `sdk` from [SDKMAN!] usable from [fish], including auto-completion.
