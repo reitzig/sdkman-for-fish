@@ -1,13 +1,19 @@
-FROM ruby:2.5.8-slim-buster
+FROM ubuntu
 
 # Install dependencies
 RUN apt-get update \
  && apt-get -y install \
-        fish \
+        build-essential \
         curl \
+        fish \
+        nano \
+        ruby \
+        ruby-dev \
+        tree \
         unzip \
         zip \
- && apt-get clean
+ && apt-get clean \
+ && gem install bundler
 
 WORKDIR app
 COPY test/Gemfile ./
@@ -22,11 +28,13 @@ USER test
 RUN curl -s "https://get.sdkman.io" | bash
 
 # To speed up tests, uncomment this shared setup:
-#SHELL ["/bin/bash", "-c"]
-#RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
-# && sdk install ant 1.9.9 \
-# && sdk install ant 1.10.1 \
-# && sdk install crash
+SHELL ["/bin/bash", "-c"]
+RUN source "$TEST_HOME/.sdkman/bin/sdkman-init.sh" \
+ && sdk install ant 1.9.7 \
+ && sdk install ant 1.9.9 \
+ && sdk install ant 1.10.1 \
+ && sdk install kscript 1.5.0 \
+ && sdk install kscript 1.6.0
 
 # "Install" sdkman-for-fish
 RUN mkdir -p $TEST_HOME/.config/fish/
@@ -38,4 +46,4 @@ RUN ls -R $TEST_HOME/.config/fish/
 # Run tests
 COPY test ./
 ENTRYPOINT ["cucumber"]
-CMD []
+CMD ["--publish-quiet", "--tags", "not @pending"]

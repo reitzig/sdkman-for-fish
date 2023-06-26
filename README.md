@@ -9,29 +9,39 @@
 Makes command `sdk` from [SDKMAN!] usable from [fish], including auto-completion.
 Also adds binaries from installed SDKs to the PATH.
 
-Version 1.4.0 tested with 
+Version 2.0.0 has been tested with 
 
- - fish 2.7.1 and 3.1.2, and 
- - SDKMAN! 5.8.2, on
- - Ubuntu 18.04 LTS and macOS 10.13
+ - fish 3.6.1, and 
+ - SDKMAN! 5.18.2, on
+ - Ubuntu 22.04 LTS and macOS 12.6
 
 ## Install
 
 With [fisher] (install separately):
 
 ```
-fisher install reitzig/sdkman-for-fish@v1.4.0
+fisher install reitzig/sdkman-for-fish@v2.0.0
 ```
 
 _Note:_ 
 
- - Only compatible with fisher v3 upwards; v2 is no longer supported.
+ - Only compatible with fisher v4 upwards; v3 is no longer supported.
  - You have to install [SDKMAN!] separately.
+ - If you have installed SDKMAN! at a custom location, you need to add
+   ```fish
+   set -g __sdkman_custom_dir /your/path/to/sdkman
+   ```
+   to a fish config file
+     [run _before_](https://fishshell.com/docs/current/language.html#configuration-files)
+   `.config/fish/conf.d/sdk.fish`;
+   for example, you can use `.config/fish/conf.d/config_sdk.fish`.
+
 
 ## Usage
 
 It's all in the background; you should be able to run `sdk` and binaries installed
 with `sdk` as you would expect.
+
 
 ## Contribute
 
@@ -65,6 +75,7 @@ done
 wait
 ```
 
+
 ## Acknowledgements
 
  * Completion originally by [Ted Wise](https://github.com/ctwise); see his
@@ -81,5 +92,3 @@ wait
 [SDKMAN!]: https://github.com/sdkman/sdkman-cli
 [fish]: https://fishshell.com/
 [fisher]: https://github.com/jorgebucaran/fisher
-[travis-link]: https://travis-ci.org/reitzig/sdkman-for-fish
-[travis-badge]: https://travis-ci.org/reitzig/sdkman-for-fish.svg?branch=master

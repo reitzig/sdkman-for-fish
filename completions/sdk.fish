@@ -1,11 +1,11 @@
 # Defines autocompletion for SDKMAN!
 
-# Copyright (c) 2018 Raphael Reitzig
+# Copyright (c) 2018-2022 Raphael Reitzig
 # MIT License (MIT)
 # https://github.com/reitzig/sdkman-for-fish
 
 # Guard: SDKMAN! needs to be installed
-if not test -f "$HOME/.sdkman/bin/sdkman-init.sh"
+if not test -f "$SDKMAN_DIR/bin/sdkman-init.sh"
     exit 0
 end
 
@@ -165,16 +165,9 @@ complete -c sdk -f -n '__fish_sdkman_no_command' \
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 v version'
         # block
 
-# broadcast
-complete -c sdk -f -n '__fish_sdkman_no_command' \
-    -a 'b broadcast' \
-    -d 'Display broadcast message'
-complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 b broadcast'
-        # block
-
 # help
 complete -c sdk -f -n '__fish_sdkman_no_command' \
-    -a 'h help' \
+    -a 'help' \
     -d 'Display help message'
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 h help'
         # block
@@ -212,15 +205,39 @@ complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 0 update'
 # flush
 complete -c sdk -f -n '__fish_sdkman_no_command' \
     -a 'flush' \
-    -d 'Clear out caches'
-complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'broadcast' \
-        -d 'Re-download news'
-complete -c sdk -f -n '__fish_sdkman_using_command flush' \
-        -a 'archives' \
-        -d 'Remove downloads'
+    -d 'Clear out archives and temporary storage folders'
 complete -c sdk -f -n '__fish_sdkman_using_command flush' \
         -a 'temp' \
-        -d 'Clear installation prep folder'
+        -d 'Clear out staging work folder'
+complete -c sdk -f -n '__fish_sdkman_using_command flush' \
+        -a 'version' \
+        -d 'Flush version file'
 complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 flush'
             # block
+
+# env
+complete -c sdk -f -n '__fish_sdkman_no_command' \
+    -a 'e env' \
+    -d 'Load environment from .sdkmanrc file'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'init' \
+        -d 'Initialize .sdkmanrc file'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'install' \
+        -d 'Install all candidate versions listed in .sdkmanrc'
+complete -c sdk -f -n '__fish_sdkman_using_command e env' \
+        -a 'clear' \
+        -d 'Unload currently loaded environment'
+complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 1 e env'
+            # block
+
+# home
+complete -c sdk -f -n '__fish_sdkman_no_command' \
+    -a 'h home' \
+    -d 'Show installation folder of given candidate'
+complete -c sdk -f -n '__fish_sdkman_using_command h home' \
+        -a "(__fish_sdkman_candidates_with_versions)"
+complete -c sdk -f -n '__fish_sdkman_specifying_candidate h home' \
+            -a "(__fish_sdkman_installed_versions)"
+complete -c sdk -f -n '__fish_sdkman_command_has_enough_parameters 2 h home'
+                # block

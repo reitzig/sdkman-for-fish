@@ -3,12 +3,9 @@
     <deployment type="dockerfile">
       <settings>
         <option name="imageTag" value="sdkman-for-fish-tests" />
-        <option name="buildCliOptions" value="" />
-        <option name="command" value="" />
-        <option name="containerName" value="" />
+        <option name="containerName" value="sdkman-for-fish-tests" />
         <option name="contextFolderPath" value="." />
-        <option name="entrypoint" value="" />
-        <option name="commandLineOptions" value="--rm" />
+        <option name="commandLineOptions" value="" />
         <option name="sourceFilePath" value="test/Dockerfile" />
       </settings>
     </deployment>

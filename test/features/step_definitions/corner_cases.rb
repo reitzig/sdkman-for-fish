@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'fileutils'
+
 Given('environment variable {env_name} is not set') do |name|
   @name = name
   @expect_intermediate_value = false
@@ -20,6 +22,26 @@ Given('environment variable {env_name} is set to {string}') do |name, new_value|
       export #{name}=#{new_value}; \\
       env | grep -E "^#{name}="; \\
   BASH
+end
+
+$install_default = "#{ENV['HOME']}/.sdkman"
+$install_custom = nil
+$install_backup = "#{$install_default}_bak"
+Given(/^SDKMAN! is installed at (.*)$/) do |path|
+  $install_custom = path
+  FileUtils.cp_r($install_default, $install_custom)
+  log "Backing up #{$install_default} at #{$install_backup}"
+  FileUtils.mv($install_default, $install_backup)
+end
+
+def _restore_install  # called in After hook
+  unless $install_custom.nil?
+    log "Removing #{$install_custom}"
+    FileUtils.rm_rf($install_custom)
+    $install_custom = nil
+    log "Restoring #{$install_default} from #{$install_backup}"
+    FileUtils.mv($install_backup, $install_default)
+  end
 end
 
 When('a new Fish shell is launched') do

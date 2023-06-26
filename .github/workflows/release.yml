@@ -1,0 +1,30 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: "Create Release"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Is pre-release?
+        id: is_pre_release
+        run: |
+          version="${GITHUB_REF#refs/tags/}"
+          if [[ "${version}" =~ -.*$ ]]; then
+            echo ::set-output name=IS_PRERELEASE::true
+          else
+            echo ::set-output name=IS_PRERELEASE::false
+          fi
+      - name: Release
+        uses: docker://antonyurchenko/git-release:v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRAFT_RELEASE: "false"
+          PRE_RELEASE: ${{ steps.is_pre_release.outputs.IS_PRERELEASE }}
+          CHANGELOG_FILE: "CHANGELOG.md"
+          ALLOW_EMPTY_CHANGELOG: "false"
+          ALLOW_TAG_PREFIX: "true"
