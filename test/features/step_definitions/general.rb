@@ -38,7 +38,7 @@ end
 
 And('the output contains {string}') do |content|
   output = @response[:stdout]
-             .select { |line| !line.blank? }
+             .select { |line| !line.strip.empty? }
              .map { |line| line.strip }
   expect(output).to include(content)
 end
