@@ -7,8 +7,7 @@ Feature: Wrapping of Bash
     We verify equality of (standard) output, exit code, and environment variables.
 
     Background:
-        Given SDKMAN! candidate list is up to date
-        And   candidate ant is installed at version 1.9.9
+        Given candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
         And   file /tmp/env-test/.sdkmanrc exists with content
             """

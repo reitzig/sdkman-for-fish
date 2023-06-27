@@ -3,8 +3,7 @@ Feature: Support autoenv setting
     candidates specified in `./.sdkmanrc`, if any.
 
     Background:
-        Given SDKMAN! candidate list is up to date
-        And   candidate ant is installed at version 1.9.7
+        Given candidate ant is installed at version 1.9.7
         And   candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
         And   candidate kscript is installed at version 1.5.0
