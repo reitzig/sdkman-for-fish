@@ -2,8 +2,7 @@ Feature: Shell Completion
     We want to get the correct completion on the CLI.
 
     Background:
-        Given SDKMAN! candidate list is up to date
-        And   candidate ant is installed at version 1.9.9
+        Given candidate ant is installed at version 1.9.9
         And   candidate ant is installed at version 1.10.1
         And   candidate kscript is installed
 

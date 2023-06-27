@@ -1,14 +1,6 @@
 require 'fileutils'
 require 'tempfile'
 
-$index_updated = false # TODO: Hack since Cucumber doesn't have Feature-level hooks
-Given(/^SDKMAN! candidate list is up to date$/) do
-  unless $index_updated
-    run_bash_command('sdk update')
-    $index_updated = true
-  end
-end
-
 Given(/^candidate (\w+) is installed at version (\d+(?:\.\d+)*)$/) do |candidate, version|
   # TODO: Can we mock-install instead?
   #       Something like

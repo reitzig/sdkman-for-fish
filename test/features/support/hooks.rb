@@ -1,6 +1,10 @@
 require_relative '../step_definitions/setup'
 require_relative '../step_definitions/corner_cases.rb'
 
+BeforeAll do
+  run_bash_command('sdk update')
+end
+
 After do |scenario|
   _remove_fish_configs
   _restore_fish_config
@@ -9,12 +13,7 @@ After do |scenario|
 end
 
 # Uninstall all SDKMAN! candidates
-# TODO: Run after every scenario, this makes tests very slow.
-#       Currently, Cucumber doesn't have Feature-level hooks, so we have to work around:
-#       --> install only if not already installed;
-#           if the test needs a candidate to _not_ be there, make it explicit.
-#       --> clean up after _all_ features at least
-at_exit do
+AfterAll do
   Dir["#{ENV['HOME']}/.sdkman/candidates/*/*"].each do |candidate_dir|
     _uninstall_candidate_version(candidate_dir)
   end
