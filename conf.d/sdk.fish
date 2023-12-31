@@ -10,7 +10,7 @@
 # Account for custom install locations
 if set -q __sdkman_custom_dir
     set -gx SDKMAN_DIR "$__sdkman_custom_dir"
-else
+else if not set -q SDKMAN_DIR
     # This is the default location:
     set -gx SDKMAN_DIR "$HOME/.sdkman"
 end
