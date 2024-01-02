@@ -54,7 +54,7 @@ the recommended way is to run the tests in a Docker container:
  
 ```fish
 docker build -t sdkman-for-fish-tests -f test/Dockerfile .
-docker run --rm sdkman-for-fish-tests
+docker run --rm -it sdkman-for-fish-tests
 ```
    
 A run configuration for Jetbrains IDEs is included.
