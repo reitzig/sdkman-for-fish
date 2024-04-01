@@ -5,7 +5,25 @@
 
 version: 2
 updates:
-  - package-ecosystem: "bundler" # See documentation for possible values
-    directory: "test" # Location of package manifests
+  - package-ecosystem: "bundler"
+    directory: "test"
+    allow:
+      - dependency-type: "all"
+    schedule:
+      interval: "weekly"
+    groups:
+      # TODO: Can't we merge the two groups?
+      test-dev-non-major:
+        dependency-type: development
+        update-types:
+          - patch
+          - minor
+      test-prod-non-major:
+        dependency-type: production
+        update-types:
+          - patch
+          - minor
+  - package-ecosystem: "github-actions"
+    directory: "/"
     schedule:
       interval: "weekly"
