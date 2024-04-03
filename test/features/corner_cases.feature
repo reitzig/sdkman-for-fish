@@ -5,14 +5,18 @@ Feature: Corner Cases
         When  a new Fish shell is launched
         Then  environment variable SDKMAN_DIR has the original value
 
-    Scenario: sdk initialized for another user in this shell
-        # Use any directory outside of the user's home directory
-        Given environment variable SDKMAN_DIR is set to "/"
-        When  a new Fish shell is launched
-        Then  environment variable SDKMAN_DIR has the original value
-
-    Scenario: Custom installation path
+    Scenario: Custom installation path via env var
         Given SDKMAN! is installed at /tmp/sdkman
+        And   environment variable SDKMAN_DIR is set to "/tmp/sdkman"
+        When  we run "sdk version" in Fish
+        Then  the exit code is 0
+        And   the output contains "SDKMAN!"
+        And   environment variable SDKMAN_DIR has value "/tmp/sdkman"
+        And   environment variable ANT_HOME has value "/tmp/sdkman/candidates/ant/current"
+
+    Scenario: Custom installation path via fish config
+        Given SDKMAN! is installed at /tmp/sdkman
+        And   environment variable SDKMAN_DIR is set to "/something/wicked"
         And   fish config file config_sdk.fish exists with content
             """
             set -g __sdkman_custom_dir /tmp/sdkman
@@ -25,10 +29,7 @@ Feature: Corner Cases
 
     Scenario Outline: Completions with custom installation path
         Given SDKMAN! is installed at /tmp/sdkman
-        And   fish config file config_sdk.fish exists with content
-            """
-            set -g __sdkman_custom_dir /tmp/sdkman
-            """
+        And   environment variable SDKMAN_DIR is set to "/tmp/sdkman"
         When the user enters "<cmd>" into the prompt
         Then completion should propose "<completions>"
         Examples:

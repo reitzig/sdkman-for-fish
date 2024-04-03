@@ -7,8 +7,13 @@ this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Added
+
+- Warn on bad custom install path 
+
 ### Fixes
 
+- Respect `SDKMAN_DIR` if already set (#52; thanks, @xtexChooser!)
 - Completions use custom SDKMAN! install path (#48; thanks, @Bryan2333!)
 
 ## [2.0.0] - 2023-06-27
