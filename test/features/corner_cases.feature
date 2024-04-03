@@ -23,6 +23,29 @@ Feature: Corner Cases
         And   environment variable SDKMAN_DIR has value "/tmp/sdkman"
         And   environment variable ANT_HOME has value "/tmp/sdkman/candidates/ant/current"
 
+    Scenario Outline: Completions with custom installation path
+        Given SDKMAN! is installed at /tmp/sdkman
+        And   fish config file config_sdk.fish exists with content
+            """
+            set -g __sdkman_custom_dir /tmp/sdkman
+            """
+        When the user enters "<cmd>" into the prompt
+        Then completion should propose "<completions>"
+        Examples:
+            | cmd             | completions   |
+            | install an      | ant           |
+            | uninstall an    | ant           |
+            | uninstall ant 1 | 1.10.1, 1.9.9 |
+            | list an         | ant           |
+            | use an          | ant           |
+            | use ant 1       | 1.10.1, 1.9.9 |
+            | default an      | ant           |
+            | default ant 1   | 1.10.1, 1.9.9 |
+            | home an         | ant           |
+            | home ant 1      | 1.10.1, 1.9.9 |
+            | current an      | ant           |
+            | upgrade an      | ant           |
+
     @pending # cf. issue #10
     Scenario: PATH should contain only valid paths
         Given candidate kscript is installed
