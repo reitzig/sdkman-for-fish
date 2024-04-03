@@ -61,6 +61,8 @@ jobs:
 
       - name: Run Tests
         working-directory: test
+        env:
+          RUNNING_IN_CONTAINER: yessir
         run: |
           cucumber --publish-quiet --tags "not @pending"
 
@@ -70,7 +72,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - 'ubuntu-22.04'
+          - 'ubuntu-latest'
           - 'macos-latest'
     steps:
       - name: Install fish
