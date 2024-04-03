@@ -43,6 +43,10 @@ COPY --chown=test:test conf.d      $TEST_HOME/.config/fish/conf.d/
 COPY --chown=test:test functions   $TEST_HOME/.config/fish/functions/
 RUN ls -R $TEST_HOME/.config/fish/
 
+# Signal we're safely running in a container;
+# we abort the tests to avoid breaking the host system!
+ENV RUNNING_IN_CONTAINER=yessir
+
 # Run tests
 COPY test ./
 ENTRYPOINT ["cucumber"]
