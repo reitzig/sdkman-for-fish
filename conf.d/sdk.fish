@@ -10,21 +10,28 @@
 # Account for custom install locations
 if set -q __sdkman_custom_dir
     set -gx SDKMAN_DIR "$__sdkman_custom_dir"
-else
-    # This is the default location:
+end
+# Guard: SDKMAN! needs to be installed
+if set -q SDKMAN_DIR; and not test -f "$SDKMAN_DIR/bin/sdkman-init.sh"
+    echo "WARNING: SDKMAN! installation path set to $SDKMAN_DIR, but no installation found there"
+    exit 0
+end
+
+# Unless overridden, use the default location:
+if not set -q SDKMAN_DIR
     set -gx SDKMAN_DIR "$HOME/.sdkman"
 end
 
 set __fish_sdkman_init "$SDKMAN_DIR/bin/sdkman-init.sh"
 
-# Copied from https://github.com/jorgebucaran/fisher/blob/main/functions/fisher.fish to be consistent:
-set --query fisher_path || set --local fisher_path $__fish_config_dir
-set __fish_sdkman_noexport_init "$fisher_path/functions/__sdkman-noexport-init.sh"
-
 # Guard: SDKMAN! needs to be installed
 if not test -f "$__fish_sdkman_init"
     exit 0
 end
+
+# Copied from https://github.com/jorgebucaran/fisher/blob/main/functions/fisher.fish to be consistent:
+set --query fisher_path || set --local fisher_path $__fish_config_dir
+set __fish_sdkman_noexport_init "$fisher_path/functions/__sdkman-noexport-init.sh"
 
 # Hack for issue #19:
 # Create version of sdkman-init that doesn't export any environment variables.
