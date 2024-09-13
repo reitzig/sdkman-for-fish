@@ -62,7 +62,7 @@ function __fish_sdkman_run_in_bash
              env | grep -i -E \"^(`echo \${SDKMAN_CANDIDATES_CSV} | sed 's/,/|/g'`)_HOME\" >> $pipe;
              echo \"SDKMAN_OFFLINE_MODE=\${SDKMAN_OFFLINE_MODE}\" >> $pipe;
              echo \"SDKMAN_ENV=\${SDKMAN_ENV}\" >> $pipe" # it's not an environment variable!
-    set bashDump (cat $pipe; rm $pipe)
+    set bashDump (cat $pipe; command rm $pipe)
 
     set sdkStatus $bashDump[1]
     set bashEnv $bashDump[2..-1]
