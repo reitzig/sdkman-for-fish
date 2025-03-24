@@ -41,7 +41,7 @@ jobs:
           sdk version
 
       - name: Install fish
-        uses: fish-actions/install-fish@v1.1.0
+        uses: fish-actions/install-fish@v1.2.0
 
       - name: Install sdkman-for-fish
         shell: fish "{0}"
@@ -76,7 +76,7 @@ jobs:
           - 'macos-latest'
     steps:
       - name: Install fish
-        uses: fish-actions/install-fish@v1.1.0
+        uses: fish-actions/install-fish@v1.2.0
 
       - name: Install SDKMAN!
         run: |
