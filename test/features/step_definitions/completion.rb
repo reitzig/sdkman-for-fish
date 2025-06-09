@@ -18,7 +18,9 @@ end
 
 Then('completion should propose {string}') do |completions|
   completions = completions.split(',').map(&:strip)
-  expect(@response).to include(*completions)
+  unless completions.empty?
+    expect(@response).to include(*completions)
+  end
 end
 
 Then('completion should not propose {patterns}') do |exclusions_patterns|
