@@ -11,5 +11,9 @@ insert_final_newline = true
 [*.{yaml,yml}]
 indent_size = 2
 
+[*.{json,json5}]
+indent_size = 2
+ij_json_keep_trailing_comma = true
+
 [*.md]
 trim_trailing_whitespace = false

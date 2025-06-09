@@ -1,0 +1,24 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
+    "config:best-practices",
+    "schedule:weekly",
+  ],
+  ignorePaths: [],
+  lockFileMaintenance: {
+    enabled: true,
+  },
+  packageRules: [
+    {
+      matchUpdateTypes: [
+        "lockFileMaintenance",
+        "digest",
+        "patch",
+        "minor",
+      ],
+      groupName: "dev dependencies (non-major)",
+      automerge: true,
+      automergeType: "branch",
+    },
+  ],
+}
