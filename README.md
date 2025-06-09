@@ -28,7 +28,7 @@ _Note:_
  - Only compatible with fisher v4 upwards; v3 is no longer supported.
  - You have to install [SDKMAN!] separately.
  - If you have installed SDKMAN! at a custom location, you need to either
-   - set environment variable `SDKMAN_DIR` to that path using your preferred method, or 
+   - set environment variable `SDKMAN_DIR` to that path with `set -Ux`, or 
    - add
      ```fish
      set -g __sdkman_custom_dir /your/path/to/sdkman
