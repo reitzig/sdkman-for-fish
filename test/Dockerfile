@@ -15,7 +15,7 @@ RUN apt-get update \
  && apt-get clean \
  && gem install bundler
 
-WORKDIR app
+WORKDIR /tmp
 COPY test/Gemfile ./
 RUN bundle install \
  && rm Gemfile
@@ -48,6 +48,7 @@ RUN ls -R $TEST_HOME/.config/fish/
 ENV RUNNING_IN_CONTAINER=yessir
 
 # Run tests
-COPY test ./
+WORKDIR "${TEST_HOME}/sdk4fish_test"
+COPY --chown=test:test test ./
 ENTRYPOINT ["cucumber"]
 CMD ["--publish-quiet", "--tags", "not @pending"]
