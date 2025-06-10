@@ -9,11 +9,11 @@
 Makes command `sdk` from [SDKMAN!] usable from [fish], including auto-completion.
 Also adds binaries from installed SDKs to the PATH.
 
-Version 2.1.0 has been tested with 
+Version 2.1.1 has been tested with 
 
- - fish 3.7 and 
- - SDKMAN! 5.18.2 on
- - Ubuntu 22.04 LTS and macOS 14.4
+ - fish 4.0 and 
+ - SDKMAN! 5.19.0 on
+ - Ubuntu 24.04 LTS and macOS 14.7
 
 ## Install
 
