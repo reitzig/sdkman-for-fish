@@ -28,9 +28,8 @@ jobs:
       #     Because we want to confirm it runs on macOS, and
       #     there are no Docker images based on frickin' macOS.
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 4.0.2
+      - name: Install tooling
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2
 
       - name: Install Test Dependencies
         working-directory: test
@@ -46,6 +45,8 @@ jobs:
 
       - name: Install fish
         uses: fish-actions/install-fish@4bb37a71daebb76c6fb7d83771cff31b8a78c28e # v1.2.0
+        # TODO: pin fish version; renovate
+        #       ⚠️ 3 vs 4 !
 
       - name: Install sdkman-for-fish
         shell: fish "{0}"
