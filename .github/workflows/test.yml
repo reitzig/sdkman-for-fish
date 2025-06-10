@@ -20,13 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # NB: We have a Docker setup for testing -- why do all this?
-      #     Because we want to confirm it runs on macOS, and
-      #     there are no Docker images based on frickin' macOS.
-
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.3
+      - name: Install tooling
+        uses: jdx/mise-action@13abe502c30c1559a5c37dff303831bab82c9402 # v2
 
       - name: Install Test Dependencies
         working-directory: test
@@ -42,6 +37,8 @@ jobs:
 
       - name: Install fish
         uses: fish-actions/install-fish@v1.1.0
+        # TODO: pin fish version; renovate
+        #       ⚠️ 3 vs 4 !
 
       - name: Install sdkman-for-fish
         shell: fish "{0}"

@@ -1,30 +1,46 @@
-FROM ubuntu
+FROM ubuntu:24.04
+
+# TODO: pin fish version; renovate
 
 # Install dependencies
 RUN apt-get update \
- && apt-get -y install \
+ && apt-get -y --no-install-recommends install \
+        autoconf \
         build-essential \
+        ca-certificates \
         curl \
         fish \
-        nano \
-        ruby \
-        ruby-dev \
-        tree \
+        libssl-dev \
+        libyaml-dev \
+        libffi-dev \
+        libgmp-dev \
+        rustc \
         unzip \
         zip \
+        zlib1g-dev \
  && apt-get clean \
- && gem install bundler
-
-WORKDIR /tmp
-COPY test/Gemfile ./
-RUN bundle install \
- && rm Gemfile
+ && rm -rf /var/lib/apt/lists/*
 
 # Switch to non-root user for test context
 ARG TEST_HOME="/home/test"
 RUN groupadd -r test \
  && useradd --no-log-init -r -g test -m -d $TEST_HOME test
 USER test
+
+WORKDIR "${TEST_HOME}"
+COPY --chown=test:test mise.toml .config/mise/config.toml
+ENV PATH="${TEST_HOME}/.local/share/mise/shims/:${TEST_HOME}/.local/bin/:${PATH}"
+ENV MISE_RUBY_INSTALL=true
+RUN curl --fail https://mise.run | sh \
+ && mise install \
+ && mise activate --shims \
+ && gem install bundler
+
+WORKDIR "${TEST_HOME}/sdk4fish_test"
+COPY --chown=test:test test ./
+RUN bundle install
+
+# TODO: pin sdkman version, renovate (possible?)
 RUN curl -s "https://get.sdkman.io" | bash
 
 # To speed up tests, uncomment this shared setup:
@@ -48,7 +64,5 @@ RUN ls -R $TEST_HOME/.config/fish/
 ENV RUNNING_IN_CONTAINER=yessir
 
 # Run tests
-WORKDIR "${TEST_HOME}/sdk4fish_test"
-COPY --chown=test:test test ./
 ENTRYPOINT ["cucumber"]
 CMD ["--publish-quiet", "--tags", "not @pending"]
