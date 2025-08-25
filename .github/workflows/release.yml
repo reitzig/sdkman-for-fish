@@ -23,7 +23,7 @@ jobs:
           fi
 
       - name: Release
-        uses: docker://antonyurchenko/git-release:v5
+        uses: docker://antonyurchenko/git-release:v5@sha256:8af09b24c3d96c2d5cc1c383ad9e38fdc578f4f33d7ec67b0a61378ed04794ef
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DRAFT_RELEASE: "true"
