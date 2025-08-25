@@ -18,7 +18,7 @@ jobs:
           - 'ubuntu-latest'
           - 'macos-latest'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
 
       # NB: We have a Docker setup for testing -- why do all this?
       #     Because we want to confirm it runs on macOS, and
