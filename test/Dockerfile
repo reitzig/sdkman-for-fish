@@ -1,8 +1,11 @@
 FROM ubuntu@sha256:66460d557b25769b102175144d538d88219c077c678a49af4afca6fbfc1b5252
 
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # Install dependencies
+# hadolint ignore=DL3008,DL3028
 RUN apt-get update \
- && apt-get -y install \
+ && apt-get -y --no-install-recommends install \
         build-essential \
         curl \
         fish \
@@ -13,6 +16,7 @@ RUN apt-get update \
         unzip \
         zip \
  && apt-get clean \
+ && rm -rf /var/lib/apt/lists/* \
  && gem install bundler
 
 WORKDIR /tmp
