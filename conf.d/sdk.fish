@@ -108,4 +108,5 @@ if grep -q "^sdkman_auto_env=true" "$SDKMAN_DIR/etc/config"
 
         set -x SDKMAN_OLD_PWD "$PWD" # needed by the Bash implementation
     end
+    __fish_sdkman_autoenv
 end
