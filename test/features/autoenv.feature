@@ -9,7 +9,7 @@ Feature: Support autoenv setting
         And   candidate kscript is installed at version 1.5.0
         And   candidate kscript is installed at version 1.6.0
 
-    Scenario: No action if autoenv turned off
+    Scenario: No action after cd if autoenv turned off
         Given SDKMAN! config sets sdkman_auto_env to false
         And   file /tmp/autoenv-test/.sdkmanrc exists with content
             """
@@ -30,12 +30,28 @@ Feature: Support autoenv setting
             1.10.1
             """
 
-    Scenario: .sdkmanrc loaded if autoenv turned on
+    Scenario: No action after starting fish if autoenv turned off
+        Given SDKMAN! config sets sdkman_auto_env to false
+        And   file .sdkmanrc exists with content
+            """
+            ant=1.9.9
+            """
+        When we run fish script
+            """
+            echo (basename (realpath $ANT_HOME)) > /tmp/autoenv-test.log
+            """
+        Then file /tmp/autoenv-test.log contains
+            """
+            1.10.1
+            """
+
+    Scenario: .sdkmanrc loaded after cd if autoenv turned on
         Given SDKMAN! config sets sdkman_auto_env to true
         And   file /tmp/autoenv-test/.sdkmanrc exists with content
             """
             ant=1.9.9
             """
+        And   file .sdkmanrc does not exist
         When we run fish script
             """
             echo (basename (realpath $ANT_HOME)) > /tmp/autoenv-test.log
@@ -49,6 +65,21 @@ Feature: Support autoenv setting
             1.10.1
             1.9.9
             1.10.1
+            """
+
+    Scenario: .sdkmanrc loaded after starting fish if autoenv turned on
+        Given SDKMAN! config sets sdkman_auto_env to true
+        And   file .sdkmanrc exists with content
+            """
+            ant=1.9.9
+            """
+        When we run fish script
+            """
+            echo (basename (realpath $ANT_HOME)) > /tmp/autoenv-test.log
+            """
+        Then file /tmp/autoenv-test.log contains
+            """
+            1.9.9
             """
 
     # TODO: But that PR had been merged back when -- re-investigate
