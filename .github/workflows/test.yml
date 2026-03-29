@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
+      - name: Install current Bash
+        if: runner.os == 'macOS'
+        run: brew install bash
+
       # NB: We have a Docker setup for testing -- why do all this?
       #     Because we want to confirm it runs on macOS, and
       #     there are no Docker images based on frickin' macOS.
@@ -75,6 +79,10 @@ jobs:
           - 'ubuntu-latest'
           - 'macos-latest'
     steps:
+      - name: Install current Bash
+        if: runner.os == 'macOS'
+        run: brew install bash
+
       - name: Install fish
         uses: fish-actions/install-fish@4bb37a71daebb76c6fb7d83771cff31b8a78c28e # v1.2.0
 
