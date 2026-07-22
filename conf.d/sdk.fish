@@ -96,7 +96,7 @@ end
 # If this is a subshell of a(n initialized) fish owned by the same user,
 # no initialization necessary.
 # Otherwise:
-if not set -q SDKMAN_CANDIDATES_DIR; or test (ls -ld "$SDKMAN_CANDIDATES_DIR" | awk '{print $3}') != (whoami)
+if not set -q SDKMAN_CANDIDATES_DIR; or test (ls -ld "$SDKMAN_CANDIDATES_DIR" | awk '{print $3}' | tail -n 1) != (whoami)
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
