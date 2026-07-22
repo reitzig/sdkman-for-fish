@@ -39,6 +39,10 @@ Given(/^file ([a-zA-Z0-9\-_.\/]+) exists with content/) do |filename,content|
   File.write(filename, content)
 end
 
+And(/^file ([a-zA-Z0-9\-_.\/]+) does not exist/) do |filename|
+  FileUtils.rm_f(filename)
+end
+
 $fish_config_files = []
 def _remove_fish_configs # called in After hook
   $fish_config_files.each do |f|
