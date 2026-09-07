@@ -18,7 +18,11 @@ jobs:
           - 'ubuntu-latest'
           - 'macos-latest'
     steps:
-      - uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+      - name: Install current Bash
+        if: runner.os == 'macOS'
+        run: brew install bash
 
       # NB: We have a Docker setup for testing -- why do all this?
       #     Because we want to confirm it runs on macOS, and
@@ -26,7 +30,7 @@ jobs:
 
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.4.7
+          ruby-version: 4.0.6
 
       - name: Install Test Dependencies
         working-directory: test
@@ -75,6 +79,10 @@ jobs:
           - 'ubuntu-latest'
           - 'macos-latest'
     steps:
+      - name: Install current Bash
+        if: runner.os == 'macOS'
+        run: brew install bash
+
       - name: Install fish
         uses: fish-actions/install-fish@4bb37a71daebb76c6fb7d83771cff31b8a78c28e # v1.2.0
 
