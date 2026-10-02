@@ -1,4 +1,4 @@
-FROM ubuntu@sha256:678c6550cc43645e08669028bc177f50be4e7c5b8cca677067b1914d4afc7a03
+FROM ubuntu@sha256:3595d7fc4286a33fad0fd853a4063e654287a9c3787437d7937c94ca3f7a804e
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
