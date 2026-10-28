@@ -60,21 +60,21 @@ end
 # # # # # #
 
 function __fish_sdkman_candidates
-    cat "$SDKMAN_DIR"/var/candidates | string replace -a -r ',' '\n'
+    command cat "$SDKMAN_DIR"/var/candidates | string replace -a -r ',' '\n'
 end
 
 function __fish_sdkman_candidates_with_versions
     set regexpHome (string replace -a '/' '\\/' "$HOME/")
 
-    find "$SDKMAN_DIR"/candidates/ -mindepth 2 -maxdepth 2 -name '*current' \
-    | awk -F '/' '{ print $(NF-1) }' \
-    | sort -u
+    command find "$SDKMAN_DIR"/candidates/ -mindepth 2 -maxdepth 2 -name '*current' \
+    | command awk -F '/' '{ print $(NF-1) }' \
+    | command sort -u
 end
 
 function __fish_sdkman_installed_versions
     set cmd (commandline -opc)
     if [ -d "$SDKMAN_DIR"/candidates/$cmd[3]/current ]
-        ls -v1 "$SDKMAN_DIR"/candidates/$cmd[3] | grep -v current
+        command ls -v1 "$SDKMAN_DIR"/candidates/$cmd[3] | command grep -v current
     end
 end
 

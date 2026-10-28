@@ -37,10 +37,10 @@ set __fish_sdkman_noexport_init "$fisher_path/functions/__sdkman-noexport-init.s
 # Create version of sdkman-init that doesn't export any environment variables.
 # Refresh if sdkman-init changed.
 if  begin       not test -f "$__fish_sdkman_noexport_init";
-          or    env test "$__fish_sdkman_init" -nt "$__fish_sdkman_noexport_init"
+          or    command env test "$__fish_sdkman_init" -nt "$__fish_sdkman_noexport_init"
     end
     mkdir -p (dirname $__fish_sdkman_noexport_init)
-    sed -E -e 's/^(\s*).*(export|to_path).*$/\1:/g' "$__fish_sdkman_init" \
+    command sed -E -e 's/^(\s*).*(export|to_path).*$/\1:/g' "$__fish_sdkman_init" \
         > "$__fish_sdkman_noexport_init"
 end
 
@@ -55,14 +55,14 @@ function __fish_sdkman_run_in_bash
     # pipe it as well.
     #
     # TODO: Can somebody get this to work without the overhead of a file?
-    set pipe (mktemp)
-    bash -c "$argv[1];
+    set pipe (command mktemp)
+    command bash -c "$argv[1];
              echo -e \"\$?\" > $pipe;
              env | grep -e '^SDKMAN_\|^PATH' >> $pipe;
              env | grep -i -E \"^(`echo \${SDKMAN_CANDIDATES_CSV} | sed 's/,/|/g'`)_HOME\" >> $pipe;
              echo \"SDKMAN_OFFLINE_MODE=\${SDKMAN_OFFLINE_MODE}\" >> $pipe;
              echo \"SDKMAN_ENV=\${SDKMAN_ENV}\" >> $pipe" # it's not an environment variable!
-    set bashDump (cat $pipe; rm $pipe)
+    set bashDump (command cat $pipe; rm $pipe)
 
     set sdkStatus $bashDump[1]
     set bashEnv $bashDump[2..-1]
@@ -96,12 +96,12 @@ end
 # If this is a subshell of a(n initialized) fish owned by the same user,
 # no initialization necessary.
 # Otherwise:
-if not set -q SDKMAN_CANDIDATES_DIR; or test (ls -ld "$SDKMAN_CANDIDATES_DIR" | awk '{print $3}') != (whoami)
+if not set -q SDKMAN_CANDIDATES_DIR; or test (command ls -ld "$SDKMAN_CANDIDATES_DIR" | command awk '{print $3}') != (whoami)
     __fish_sdkman_run_in_bash "source $__fish_sdkman_init"
 end
 
 # Set up auto_env
-if grep -q "^sdkman_auto_env=true" "$SDKMAN_DIR/etc/config"
+if command grep -q "^sdkman_auto_env=true" "$SDKMAN_DIR/etc/config"
     function __fish_sdkman_autoenv --on-variable PWD
         # Run the (modified) init script, which performs the checks and calls for us!
         __fish_sdkman_run_in_bash "source \"$__fish_sdkman_noexport_init\""
